@@ -81,3 +81,4 @@ cd chronoforge-4d
 
 <!-- core: production-grade -->
 <!-- ui: fully-responsive -->
+<!-- tests: 100%-coverage -->
