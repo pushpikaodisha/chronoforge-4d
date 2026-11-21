@@ -1,0 +1,5335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#07090e">
+  <title>ChronoForge 4D — Tesseract & Hyper-Geometry Explorer</title>
+  <style>
+/* -------------------------------------------------------------
+   CHRONOFORGE 4D DESIGN SYSTEM
+   Theme: Deep Cyber Void / Hyper-Dimensional Hologram
+   Offline pure CSS3, zero external dependencies
+------------------------------------------------------------- */
+:root {
+  --bg-void: #07090e;
+  --bg-panel: rgba(13, 18, 30, 0.82);
+  --bg-panel-solid: #0d121e;
+  --bg-card: rgba(20, 27, 45, 0.68);
+  --border-subtle: rgba(0, 240, 255, 0.15);
+  --border-bright: rgba(0, 240, 255, 0.45);
+  --border-accent: rgba(168, 85, 247, 0.4);
+  --border-danger: rgba(244, 63, 94, 0.5);
+  --cyan: #00f0ff;
+  --cyan-glow: rgba(0, 240, 255, 0.35);
+  --purple: #a855f7;
+  --purple-glow: rgba(168, 85, 247, 0.35);
+  --pink: #f43f5e;
+  --gold: #f59e0b;
+  --emerald: #10b981;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  --panel-width: 350px;
+  --header-height: 58px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --transition-fast: 0.15s ease;
+  --transition-med: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-void);
+  color: var(--text-main);
+  font-family: var(--font-stack);
+  font-size: 13px;
+  line-height: 1.4;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
+}
+
+/* -------------------------------------------------------------
+   HEADER NAVIGATION & TOP BAR
+------------------------------------------------------------- */
+header.app-header {
+  height: var(--header-height);
+  background: var(--bg-panel);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  z-index: 50;
+  position: relative;
+  gap: 10px;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand-logo-icon {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 0 8px var(--cyan));
+  animation: logoPulse 4s infinite ease-in-out;
+}
+
+@keyframes logoPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(0,240,255,0.4)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 14px rgba(168,85,247,0.7)); transform: scale(1.05); }
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 1.2px;
+  background: linear-gradient(135deg, #ffffff 20%, var(--cyan) 60%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid var(--border-bright);
+  color: var(--cyan);
+  padding: 1px 6px;
+  border-radius: 4px;
+  -webkit-text-fill-color: var(--cyan);
+}
+
+.brand-tagline {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.quick-polytope-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  max-width: 48vw;
+  padding: 4px 2px;
+  scrollbar-width: none;
+}
+.quick-polytope-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.poly-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.poly-pill:hover {
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--text-main);
+  border-color: var(--cyan);
+}
+
+.poly-pill.active {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.25), rgba(168, 85, 247, 0.28));
+  border-color: var(--cyan);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  position: relative;
+}
+
+.icon-btn:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan-glow);
+}
+
+.icon-btn.active {
+  background: rgba(0, 240, 255, 0.25);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.icon-btn.recording-active {
+  background: rgba(244, 63, 94, 0.25) !important;
+  border-color: var(--pink) !important;
+  color: var(--pink) !important;
+  animation: recPulse 1.2s infinite;
+}
+
+@keyframes recPulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(244, 63, 94, 0.4); }
+  50% { box-shadow: 0 0 16px rgba(244, 63, 94, 0.85); }
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* -------------------------------------------------------------
+   MAIN APPLICATION WORKSPACE
+------------------------------------------------------------- */
+.app-workspace {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary 4D Canvas Container */
+.viewport-container {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  background: radial-gradient(circle at center, #0e1424 0%, #07090e 75%, #030407 100%);
+  cursor: grab;
+  touch-action: none;
+}
+
+.viewport-container:active {
+  cursor: grabbing;
+}
+
+#main-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Floating Canvas HUD Overlays */
+.hud-overlay {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hud-top-left {
+  top: 14px;
+  left: 14px;
+}
+
+.hud-top-right {
+  top: 14px;
+  right: 14px;
+  align-items: flex-end;
+}
+
+.hud-bottom-left {
+  bottom: 14px;
+  left: 14px;
+}
+
+.hud-bottom-right {
+  bottom: 14px;
+  right: 14px;
+  align-items: flex-end;
+}
+
+.hud-chip {
+  background: rgba(10, 15, 25, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 240, 255, 0.22);
+  border-radius: var(--radius-sm);
+  padding: 5px 11px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  pointer-events: auto;
+}
+
+.hud-chip strong {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.hud-chip .badge-val {
+  color: #fff;
+}
+
+/* Floating View Mode Switcher */
+.hud-drag-modes {
+  display: flex;
+  background: rgba(10, 15, 25, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-bright);
+  border-radius: 30px;
+  padding: 3px;
+  pointer-events: auto;
+  gap: 2px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.drag-mode-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.drag-mode-btn:hover {
+  color: var(--text-main);
+}
+
+.drag-mode-btn.active {
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+/* -------------------------------------------------------------
+   COLLAPSIBLE FLOATING SIDEBAR PANELS
+------------------------------------------------------------- */
+.side-panel {
+  width: var(--panel-width);
+  height: 100%;
+  background: var(--bg-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+  transition: transform var(--transition-med);
+  overflow-y: auto;
+  position: relative;
+}
+
+.side-panel.left-panel {
+  border-left: none;
+}
+
+.side-panel.right-panel {
+  border-right: none;
+}
+
+.side-panel.collapsed {
+  position: absolute;
+  z-index: 20;
+}
+
+.side-panel.left-panel.collapsed {
+  transform: translateX(-100%);
+}
+
+.side-panel.right-panel.collapsed {
+  transform: translateX(100%);
+  right: 0;
+}
+
+.panel-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: var(--bg-panel-solid);
+  z-index: 10;
+}
+
+.panel-title {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+
+.panel-title svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--cyan);
+}
+
+.panel-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+}
+
+.panel-close-btn:hover {
+  color: #fff;
+}
+
+.panel-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* UI Card Box */
+.ui-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title .badge {
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--cyan);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+/* Form Controls */
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.control-label {
+  font-size: 12px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 95px;
+}
+
+.control-val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cyan);
+  min-width: 44px;
+  text-align: right;
+}
+
+/* Range Sliders */
+.slider-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+input[type="range"]:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+  cursor: pointer;
+  border: 2px solid #000;
+  transition: transform 0.1s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+  cursor: pointer;
+  border: 2px solid #000;
+}
+
+/* Buttons */
+.btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 7px 11px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+}
+
+.btn:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan), #0099ff);
+  color: #000;
+  font-weight: 700;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #33f3ff, #1aa3ff);
+  box-shadow: 0 0 12px var(--cyan-glow);
+  color: #000;
+}
+
+.btn-secondary {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--border-accent);
+  color: #e9d5ff;
+}
+
+.btn-secondary:hover {
+  background: rgba(168, 85, 247, 0.3);
+  border-color: var(--purple);
+}
+
+.btn-danger {
+  background: rgba(244, 63, 94, 0.18);
+  border-color: var(--border-danger);
+  color: #fda4af;
+}
+
+.btn-danger:hover {
+  background: rgba(244, 63, 94, 0.35);
+  border-color: var(--pink);
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.4);
+}
+
+.btn-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 5px;
+}
+
+.btn-group-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+/* Select Dropdown */
+select.select-control {
+  width: 100%;
+  background: #0d121e;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+select.select-control:focus {
+  border-color: var(--cyan);
+}
+
+/* Checkbox / Toggle Switch */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-round {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: .2s;
+  border-radius: 20px;
+}
+
+.slider-round:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  transition: .2s;
+  border-radius: 50%;
+}
+
+input:checked + .slider-round {
+  background-color: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan-glow);
+}
+
+input:checked + .slider-round:before {
+  transform: translateX(18px);
+  background-color: #000;
+}
+
+/* 6-Plane Rotational Kinematics Grid */
+.plane-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plane-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.plane-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  width: 32px;
+  text-align: center;
+  padding: 3px 0;
+  border-radius: 3px;
+}
+
+.plane-tag.spatial {
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.plane-tag.hyper {
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--purple);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+/* Secondary Slicing Chamber Canvas */
+.slice-canvas-box {
+  width: 100%;
+  height: 185px;
+  background: radial-gradient(circle at center, #111827 0%, #080c14 100%);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-bright);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#slice-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slice-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--cyan);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+/* SO(4) Matrix Table */
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.matrix-table td {
+  padding: 4px 2px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+}
+
+.matrix-table td.diag {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+/* Net Unfolding Container */
+.unfold-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Toggle Panel Floating Trigger Tabs */
+.panel-toggle-tab {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 48px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 40;
+  transition: var(--transition-fast);
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.panel-toggle-tab:hover {
+  background: rgba(0, 240, 255, 0.2);
+}
+
+.left-toggle-tab {
+  left: 0;
+  border-radius: 0 8px 8px 0;
+  border-left: none;
+}
+
+.right-toggle-tab {
+  right: 0;
+  border-radius: 8px 0 0 8px;
+  border-right: none;
+}
+
+/* Bottom Mobile Toolbar */
+.mobile-toolbar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--bg-panel-solid);
+  border-top: 1px solid var(--border-subtle);
+  padding: 0 8px;
+  z-index: 60;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.mobile-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 8px;
+  min-width: 44px;
+  min-height: 42px;
+}
+
+.mobile-tab-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.mobile-tab-btn.active {
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.12);
+}
+
+/* -------------------------------------------------------------
+   MODALS & DIALOGS
+------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(3, 5, 10, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-med);
+  padding: 16px;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-window {
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--border-bright);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.2);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 680px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.modal-head h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-body {
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.modal-body h3 {
+  color: #fff;
+  font-size: 13px;
+  margin-top: 6px;
+  border-left: 3px solid var(--cyan);
+  padding-left: 8px;
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.lesson-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+
+.lesson-card h4 {
+  color: var(--cyan);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.modal-foot {
+  padding: 12px 18px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Audio Equalizer Indicator */
+.eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+  width: 16px;
+}
+
+.eq-bar {
+  width: 3px;
+  background: var(--cyan);
+  border-radius: 1px;
+  height: 4px;
+  transition: height 0.1s ease;
+}
+
+/* -------------------------------------------------------------
+   ANIMATION RECORDER STUDIO STYLES
+------------------------------------------------------------- */
+.record-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.rec-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 10px var(--pink);
+  animation: recBlink 0.8s infinite alternate;
+}
+
+@keyframes recBlink {
+  from { opacity: 0.3; transform: scale(0.9); }
+  to { opacity: 1.0; transform: scale(1.1); }
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+  transition: width 0.08s ease;
+}
+
+.preview-media-box {
+  width: 100%;
+  max-height: 240px;
+  background: #000;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.preview-media-box video, .preview-media-box img {
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+}
+
+/* -------------------------------------------------------------
+   RESPONSIVENESS (Desktop, Tablet, Mobile)
+------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  :root {
+    --panel-width: 310px;
+  }
+  .quick-polytope-bar {
+    max-width: 32vw;
+  }
+}
+
+@media (max-width: 820px) {
+  .quick-polytope-bar {
+    display: none;
+  }
+  .side-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+  }
+  .side-panel.left-panel {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  .side-panel.left-panel.mobile-open {
+    transform: translateX(0);
+  }
+  .side-panel.right-panel {
+    right: 0;
+    transform: translateX(100%);
+  }
+  .side-panel.right-panel.mobile-open {
+    transform: translateX(0);
+  }
+  .mobile-toolbar {
+    display: flex;
+  }
+  .hud-bottom-left, .hud-bottom-right {
+    bottom: 68px;
+  }
+  .lesson-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --panel-width: 90vw;
+  }
+  .brand-titles .brand-tagline {
+    display: none;
+  }
+  .hud-chip {
+    font-size: 10px;
+    padding: 3px 7px;
+  }
+  .drag-mode-btn {
+    padding: 4px 9px;
+    font-size: 10px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- =============================================================
+       HEADER NAVIGATION
+  ============================================================= -->
+  <header class="app-header">
+    <div class="brand-wrap" id="btn-home-logo" title="ChronoForge 4D">
+      <svg class="brand-logo-icon" viewBox="0 0 100 100">
+        <!-- Inner & Outer Rotating 4D Hypercube Glyph -->
+        <rect x="30" y="30" width="40" height="40" fill="none" stroke="#00f0ff" stroke-width="3" rx="4"/>
+        <rect x="15" y="15" width="70" height="70" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 3" rx="8"/>
+        <line x1="15" y1="15" x2="30" y2="30" stroke="#00f0ff" stroke-width="2"/>
+        <line x1="85" y1="15" x2="70" y2="30" stroke="#00f0ff" stroke-width="2"/>
+        <line x1="15" y1="85" x2="30" y2="70" stroke="#00f0ff" stroke-width="2"/>
+        <line x1="85" y1="85" x2="70" y2="70" stroke="#00f0ff" stroke-width="2"/>
+        <circle cx="50" cy="50" r="4" fill="#00f0ff"/>
+      </svg>
+      <div class="brand-titles">
+        <div class="brand-name">
+          CHRONOFORGE 4D
+          <span class="brand-badge">SO(4)</span>
+        </div>
+        <div class="brand-tagline">Tesseract & Hyper-Geometry Explorer</div>
+      </div>
+    </div>
+
+    <!-- Quick Polytope Pills -->
+    <div class="quick-polytope-bar" id="poly-pill-container">
+      <div class="poly-pill active" data-poly="tesseract">Tesseract (8-Cell)</div>
+      <div class="poly-pill" data-poly="cell16">16-Cell (Dual)</div>
+      <div class="poly-pill" data-poly="cell24">24-Cell (Unique 4D)</div>
+      <div class="poly-pill" data-poly="cell5">5-Cell (Simplex)</div>
+      <div class="poly-pill" data-poly="cell600">600-Cell (120V / 720E)</div>
+      <div class="poly-pill" data-poly="grand120">Grand 120-Cell</div>
+      <div class="poly-pill" data-poly="cell120">120-Cell ({5,3,3})</div>
+      <div class="poly-pill" data-poly="hypersphere">3-Sphere (Glome)</div>
+      <div class="poly-pill" data-poly="clifford">Clifford Torus</div>
+      <div class="poly-pill" data-poly="klein">Klein Bottle 4D</div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Audio Resonance Toggle -->
+      <button class="icon-btn" id="btn-audio" title="Toggle 4D Harmonic Resonance (Audio)">
+        <div class="eq-bars" id="audio-eq">
+          <div class="eq-bar" style="height:4px"></div>
+          <div class="eq-bar" style="height:8px"></div>
+          <div class="eq-bar" style="height:5px"></div>
+          <div class="eq-bar" style="height:11px"></div>
+        </div>
+      </button>
+
+      <!-- Gyroscope / Motion Sensor -->
+      <button class="icon-btn" id="btn-gyro" title="Enable Mobile Gyroscope 4D Tilting">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2z"/></svg>
+      </button>
+
+      <!-- 4D Bouncing Particles Toggle -->
+      <button class="icon-btn" id="btn-particles" title="Toggle 4D Bouncing Particle Chamber">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="4" r="2"/><circle cx="20" cy="12" r="2"/><circle cx="12" cy="20" r="2"/><circle cx="4" cy="12" r="2"/><path d="M12 7v2m5 3h2m-7 5v2m-5-7H5" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+
+      <!-- Volumetric Lighting & Bloom Toggle -->
+      <button class="icon-btn active" id="btn-bloom" title="Toggle Volumetric Lighting & Bloom Glow">
+        <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1s-1-.45-1-1V3c0-.55.45-1 1-1zm0 16c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1s-1-.45-1-1v-2c0-.55.45-1 1-1zm9-8c0 .55-.45 1-1 1h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1zm-16 0c0 .55-.45 1-1 1H2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1z"/></svg>
+      </button>
+
+      <!-- 360 Loop Animation Recorder -->
+      <button class="icon-btn" id="btn-record" title="Record 360° 4D Loop (WebM / GIF)">
+        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"/></svg>
+      </button>
+
+      <!-- Dimensional Academy Guide Modal -->
+      <button class="icon-btn" id="btn-tour" title="Dimensional Academy & 4D Geometry Guide">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 .88-.36 1.68-.93 2.25z"/></svg>
+      </button>
+
+      <!-- Snapshot Capture -->
+      <button class="icon-btn" id="btn-snapshot" title="Capture High-Res Hologram Snapshot">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>
+      </button>
+
+      <!-- Reset View -->
+      <button class="icon-btn" id="btn-reset" title="Reset 4D Rotations & Zoom">
+        <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- =============================================================
+       MAIN WORKSPACE WITH CANVASES & PANELS
+  ============================================================= -->
+  <main class="app-workspace">
+
+    <!-- Left Toggle Tab (when sidebar is hidden) -->
+    <div class="panel-toggle-tab left-toggle-tab" id="left-tab-toggle" title="Toggle 4D Kinematics Panel">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+    </div>
+
+    <!-- LEFT SIDEBAR: Kinematics, Polytopes, Projections -->
+    <aside class="side-panel left-panel" id="left-sidebar">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h6v6h-6V5zm-6 0h4v4H6V5zm0 6h4v4H6v-4zm0 6h4v4H6v-4zm6 4v-6h6v6h-6z"/></svg>
+          4D Kinematics & Engine
+        </div>
+        <button class="panel-close-btn" id="btn-close-left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="panel-body">
+
+        <!-- Polytope Architecture Card -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>Geometry Construct</span>
+            <span class="badge" id="poly-schlafli">{4,3,3}</span>
+          </div>
+
+          <select class="select-control" id="poly-select">
+            <option value="tesseract">Tesseract (8-Cell / Hypercube)</option>
+            <option value="cell16">16-Cell (Hexadecachoron)</option>
+            <option value="cell24">24-Cell (Icositetrachoron)</option>
+            <option value="cell5">5-Cell (Pentachoron Simplex)</option>
+            <option value="cell600">600-Cell (Hexacosichoron - 120V / 720E)</option>
+            <option value="grand120">Grand 120-Cell ({5,3,5/2} Star)</option>
+            <option value="cell120">120-Cell ({5,3,3} - 600V / 1200E)</option>
+            <option value="hypersphere">3-Sphere (Glome S³ Mesh)</option>
+            <option value="clifford">Clifford Torus (Flat Duocylinder)</option>
+            <option value="klein">Klein Bottle 4D (Non-intersecting)</option>
+          </select>
+
+          <div class="control-row">
+            <span class="control-label">Scale Factor:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-scale" min="0.4" max="3.0" step="0.05" value="1.4">
+            </div>
+            <span class="control-val" id="val-scale">1.40x</span>
+          </div>
+
+          <!-- Dalí Net Unfolding Card (Enabled for Tesseract) -->
+          <div class="unfold-container" id="unfold-box">
+            <div class="control-row">
+              <span class="control-label" style="color:var(--gold); font-weight:700;">Dalí Cross Unfold:</span>
+              <div class="slider-wrap">
+                <input type="range" id="slider-unfold" min="0" max="1" step="0.01" value="0">
+              </div>
+              <span class="control-val" id="val-unfold" style="color:var(--gold);">0%</span>
+            </div>
+
+            <div class="btn-group-2">
+              <button class="btn btn-secondary" id="btn-animate-unfold">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Animate Unfold
+              </button>
+              <button class="btn btn-secondary" id="btn-reset-fold">Reset to 4D</button>
+            </div>
+
+            <div class="control-row">
+              <span class="control-label" style="font-size:11px;">Morph Speed:</span>
+              <div class="slider-wrap">
+                <input type="range" id="slider-unfold-speed" min="0.005" max="0.04" step="0.002" value="0.015">
+              </div>
+              <span class="control-val" id="val-unfold-speed">1.5x</span>
+            </div>
+
+            <div style="font-size:10px; color:var(--text-dim); line-height:1.3; background:rgba(0,0,0,0.25); padding:6px; border-radius:4px;">
+              Morphs the 4D hypercube through rigorous SO(4) hinge transformations into Salvador Dalí's unfolded 3D Latin net of 8 interconnected cubic cells (<em>Corpus Hypercubus</em>).
+            </div>
+          </div>
+        </div>
+
+        <!-- 6-Plane 4D Rotational Precession -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>6-Plane Rotations SO(4)</span>
+            <span class="badge" id="precession-badge">ACTIVE</span>
+          </div>
+
+          <div class="plane-grid">
+            <!-- XY (Spatial) -->
+            <div class="plane-row">
+              <span class="plane-tag spatial">XY</span>
+              <div class="slider-wrap">
+                <input type="range" id="rot-xy" min="-0.04" max="0.04" step="0.001" value="0.008">
+              </div>
+              <span class="control-val" id="val-rot-xy">0.008</span>
+            </div>
+            <!-- XZ (Spatial) -->
+            <div class="plane-row">
+              <span class="plane-tag spatial">XZ</span>
+              <div class="slider-wrap">
+                <input type="range" id="rot-xz" min="-0.04" max="0.04" step="0.001" value="0.005">
+              </div>
+              <span class="control-val" id="val-rot-xz">0.005</span>
+            </div>
+            <!-- YZ (Spatial) -->
+            <div class="plane-row">
+              <span class="plane-tag spatial">YZ</span>
+              <div class="slider-wrap">
+                <input type="range" id="rot-yz" min="-0.04" max="0.04" step="0.001" value="0.000">
+              </div>
+              <span class="control-val" id="val-rot-yz">0.000</span>
+            </div>
+            <!-- XW (4D Hyper) -->
+            <div class="plane-row">
+              <span class="plane-tag hyper">XW</span>
+              <div class="slider-wrap">
+                <input type="range" id="rot-xw" min="-0.04" max="0.04" step="0.001" value="0.012">
+              </div>
+              <span class="control-val" id="val-rot-xw">0.012</span>
+            </div>
+            <!-- YW (4D Hyper) -->
+            <div class="plane-row">
+              <span class="plane-tag hyper">YW</span>
+              <div class="slider-wrap">
+                <input type="range" id="rot-yw" min="-0.04" max="0.04" step="0.001" value="0.006">
+              </div>
+              <span class="control-val" id="val-rot-yw">0.006</span>
+            </div>
+            <!-- ZW (4D Hyper) -->
+            <div class="plane-row">
+              <span class="plane-tag hyper">ZW</span>
+              <div class="slider-wrap">
+                <input type="range" id="rot-zw" min="-0.04" max="0.04" step="0.001" value="0.003">
+              </div>
+              <span class="control-val" id="val-rot-zw">0.003</span>
+            </div>
+          </div>
+
+          <!-- Precession Preset Buttons -->
+          <div class="btn-group">
+            <button class="btn btn-secondary" id="preset-clifford" title="Isoclinic Double Spin: XY = ZW">Clifford</button>
+            <button class="btn btn-secondary" id="preset-somersault" title="Somersault Flip: XW = YZ">Somersault</button>
+            <button class="btn btn-secondary" id="preset-flow" title="4D Hyperspherical Inversion">Glome</button>
+            <button class="btn btn-secondary" id="preset-stop" title="Freeze 4D Motion">Freeze</button>
+          </div>
+        </div>
+
+        <!-- Projection Optics Card -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>Projection Optics</span>
+            <span class="badge" id="proj-badge">PERSPECTIVE</span>
+          </div>
+
+          <select class="select-control" id="proj-select">
+            <option value="perspective">4D Perspective (Inner/Outer Depth)</option>
+            <option value="stereographic">Stereographic S³ (Conformal Angles)</option>
+            <option value="orthographic">Orthographic (Parallel Flat Projection)</option>
+            <option value="shadow">4D Dimensional Shadow (Carl Sagan)</option>
+          </select>
+
+          <div class="control-row">
+            <span class="control-label">4D Camera D₄:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-d4" min="1.4" max="5.0" step="0.1" value="2.5">
+            </div>
+            <span class="control-val" id="val-d4">2.5</span>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">3D Camera D₃:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-d3" min="1.8" max="7.0" step="0.1" value="3.8">
+            </div>
+            <span class="control-val" id="val-d3">3.8</span>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- CENTER VIEWPORT: Canvas & Interactive HUD -->
+    <section class="viewport-container" id="viewport-box">
+      <canvas id="main-canvas"></canvas>
+
+      <!-- HUD Top Left: Metrics & Polytope Info -->
+      <div class="hud-overlay hud-top-left">
+        <div class="hud-chip">
+          <span id="hud-poly-name" style="color:#fff; font-weight:700;">Tesseract</span>
+          <span>|</span>
+          <span>V: <strong id="hud-v">16</strong></span>
+          <span>E: <strong id="hud-e">32</strong></span>
+          <span>F: <strong id="hud-f">24</strong></span>
+          <span>C: <strong id="hud-c">8</strong></span>
+        </div>
+        <div class="hud-chip">
+          <span>FPS: <strong id="hud-fps" style="color:var(--emerald);">60</strong></span>
+          <span>|</span>
+          <span>4D Radius: <span class="badge-val" id="hud-rad">1.41</span></span>
+        </div>
+      </div>
+
+      <!-- HUD Top Center: Interactive Drag Mode Selector -->
+      <div class="hud-overlay" style="top: 14px; left: 50%; transform: translateX(-50%);">
+        <div class="hud-drag-modes">
+          <button class="drag-mode-btn active" data-mode="camera" id="mode-cam">3D Orbit</button>
+          <button class="drag-mode-btn" data-mode="hyper" id="mode-hyper">4D Hyper-Rotate</button>
+          <button class="drag-mode-btn" data-mode="slice" id="mode-slice">Scrub W-Slice</button>
+          <button class="drag-mode-btn" data-mode="particle" id="mode-particle">Particle Force</button>
+        </div>
+      </div>
+
+      <!-- HUD Top Right: Coordinate Readout & Slicing Status -->
+      <div class="hud-overlay hud-top-right">
+        <div class="hud-chip" id="hud-slice-chip">
+          <span>Slice Hyperplane: <strong id="hud-slice-w">W = 0.00</strong></span>
+        </div>
+        <div class="hud-chip" id="hud-particle-chip" style="display:none;">
+          <span>Particles: <strong id="hud-particle-count" style="color:var(--purple);">48</strong> in 4D</span>
+        </div>
+      </div>
+
+      <!-- HUD Bottom Left: Audio sonification frequency & Recording Indicator -->
+      <div class="hud-overlay hud-bottom-left">
+        <div class="hud-chip" id="hud-rec-indicator" style="display:none; border-color:var(--pink);">
+          <div class="rec-dot"></div>
+          <span style="color:var(--pink); font-weight:700;">REC 360° LOOP: <span id="hud-rec-time">0.0s</span></span>
+        </div>
+        <div class="hud-chip">
+          <span>Resonance: <strong id="hud-audio-freq">Muted</strong></span>
+          <span>|</span>
+          <span id="hud-spin-status" style="color:var(--purple);">Precession 1.8 rad/s</span>
+        </div>
+      </div>
+
+      <!-- HUD Bottom Right: Volumetric & Shading Readout -->
+      <div class="hud-overlay hud-bottom-right">
+        <div class="hud-chip" id="hud-bloom-chip">
+          <span>Hyper-Fog: <strong id="hud-fog-status">ON</strong></span>
+          <span>|</span>
+          <span>Bloom: <strong id="hud-bloom-status" style="color:var(--cyan);">1.4x</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Toggle Tab -->
+    <div class="panel-toggle-tab right-toggle-tab" id="right-tab-toggle" title="Toggle Slicing & Physics Panel">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+    </div>
+
+    <!-- RIGHT SIDEBAR: Slicing Chamber, Particles, Shading, Volumetrics, Matrix -->
+    <aside class="side-panel right-panel" id="right-sidebar">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11zM7 13l-5 9h10zM17 13l-5 9h10z"/></svg>
+          Slicing, Physics & Shading
+        </div>
+        <button class="panel-close-btn" id="btn-close-right">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="panel-body">
+
+        <!-- 3D Hyperplane Slicing Chamber Card -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>3D Hyperplane Slicing</span>
+            <span class="badge" id="slice-active-badge">W = 0.00</span>
+          </div>
+
+          <!-- Secondary Preview Canvas: Isolated 3D Cross-Section -->
+          <div class="slice-canvas-box">
+            <canvas id="slice-canvas"></canvas>
+            <div class="slice-badge">3D CROSS-SECTION</div>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Slicing Plane W:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-slice-w" min="-1.6" max="1.6" step="0.01" value="0.0">
+            </div>
+            <span class="control-val" id="val-slice-w">0.00</span>
+          </div>
+
+          <div class="btn-group-2">
+            <button class="btn btn-primary" id="btn-auto-scan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              Auto Scan W
+            </button>
+            <button class="btn btn-secondary" id="btn-center-slice">Center W=0</button>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Render Solid Faces</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-slice-solid" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div style="font-size:10px; color:var(--text-muted);">
+            Cross-Section Cut: <strong id="slice-verts-count" style="color:var(--cyan);">0</strong> Vertices, <strong id="slice-edges-count" style="color:var(--purple);">0</strong> Segments.
+          </div>
+        </div>
+
+        <!-- 4D Bouncing Particle Chamber Card -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>4D Particle Chamber</span>
+            <span class="badge" id="particle-status-badge" style="color:var(--purple);">OFF</span>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label" style="font-weight:700; color:var(--cyan);">Activate 4D Physics</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-particle-active">
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Particle Count:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-particle-count" min="10" max="120" step="5" value="45">
+            </div>
+            <span class="control-val" id="val-particle-count">45</span>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Kinetic Energy:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-particle-speed" min="0.2" max="2.5" step="0.1" value="1.0">
+            </div>
+            <span class="control-val" id="val-particle-speed">1.0x</span>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">4D Gravity Vector:</span>
+            <select class="select-control" id="particle-gravity-select" style="width:160px;">
+              <option value="none">Zero-G (Free Bounce)</option>
+              <option value="w_grav">W-Axis Hyper-Gravity</option>
+              <option value="y_grav">Y-Axis 3D Gravity</option>
+              <option value="vortex">4D Radial Vortex</option>
+            </select>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Chamber Boundary:</span>
+            <select class="select-control" id="particle-boundary-select" style="width:160px;">
+              <option value="box">4D Hypercube Box [-L, L]⁴</option>
+              <option value="sphere">4D Hypersphere Shell S³</option>
+            </select>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Elastic Collisions</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-particle-collide" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Particle Hyper-Trails</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-particle-trails" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <button class="btn btn-secondary" id="btn-respawn-particles">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+            Respawn in 4D Center
+          </button>
+        </div>
+
+        <!-- 4D Chromatic Depth & Shading Card -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>Color by 4th Dimension (W-Depth)</span>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Chromatic Spectrum:</span>
+            <select class="select-control" id="theme-select" style="width:160px;">
+              <option value="hyper_chroma">Hyper-Chroma (Full Rainbow)</option>
+              <option value="quantum">Quantum Neon (Cyan-Violet)</option>
+              <option value="solar">Thermal Glow (Blackbody)</option>
+              <option value="abyss">Cyberpunk Matrix (Emerald)</option>
+              <option value="infrared">Bioluminescence (Coral-UV)</option>
+              <option value="platinum">Platinum Architectural</option>
+            </select>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Continuous 4D Gradient Edges</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-gradient-edges" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Chromatic Cycle Animation</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-chroma-cycle">
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Cycle Speed:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-chroma-speed" min="0.2" max="3.0" step="0.1" value="1.0">
+            </div>
+            <span class="control-val" id="val-chroma-speed">1.0x</span>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Vertex Trails:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-trails" min="0" max="40" step="1" value="15">
+            </div>
+            <span class="control-val" id="val-trails">15</span>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">W-Depth Line Glow</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-depth-glow" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Glass Cell Faces</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-cell-faces" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">4D Shadow Ground</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-shadow-floor" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <!-- Cell Isolation Dropdown -->
+          <div class="control-row" id="cell-isolate-box">
+            <span class="control-label">Highlight Cell:</span>
+            <select class="select-control" id="cell-select" style="width:160px;">
+              <option value="-1">All 8 Cubic Cells</option>
+              <option value="0">Cell 0: W = +1 (Outer)</option>
+              <option value="1">Cell 1: W = -1 (Inner)</option>
+              <option value="2">Cell 2: X = +1 (Right)</option>
+              <option value="3">Cell 3: X = -1 (Left)</option>
+              <option value="4">Cell 4: Y = +1 (Top)</option>
+              <option value="5">Cell 5: Y = -1 (Bottom)</option>
+              <option value="6">Cell 6: Z = +1 (Front)</option>
+              <option value="7">Cell 7: Z = -1 (Back)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Volumetric Hyper-Raymarching & Glow Shading Card -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>Volumetrics & Glow Shaders</span>
+            <span class="badge" style="color:var(--cyan);">RAYMARCH</span>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Atmospheric Hyper-Fog</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-hyper-fog" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Fog Density:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-fog-density" min="0.1" max="1.5" step="0.05" value="0.55">
+            </div>
+            <span class="control-val" id="val-fog-density">0.55</span>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">4D Light Point Source</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-4d-light" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Light Orbit Speed:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-light-speed" min="0.2" max="2.5" step="0.1" value="1.0">
+            </div>
+            <span class="control-val" id="val-light-speed">1.0x</span>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Multi-Pass Bloom Glow</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-bloom-glow" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Bloom Intensity:</span>
+            <div class="slider-wrap">
+              <input type="range" id="slider-bloom-intensity" min="0.5" max="3.0" step="0.1" value="1.4">
+            </div>
+            <span class="control-val" id="val-bloom-intensity">1.4x</span>
+          </div>
+
+          <div class="toggle-row">
+            <span class="control-label">Hyper-Dust Cosmic Motes</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-dust-motes" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- SO(4) Matrix Inspector Card -->
+        <div class="ui-card">
+          <div class="card-title">
+            <span>SO(4) Rotation Matrix</span>
+            <span class="badge" style="color:var(--emerald);">det ≈ 1.000</span>
+          </div>
+
+          <table class="matrix-table" id="matrix-display">
+            <tr><td class="diag">1.000</td><td>0.000</td><td>0.000</td><td>0.000</td></tr>
+            <tr><td>0.000</td><td class="diag">1.000</td><td>0.000</td><td>0.000</td></tr>
+            <tr><td>0.000</td><td>0.000</td><td class="diag">1.000</td><td>0.000</td></tr>
+            <tr><td>0.000</td><td>0.000</td><td>0.000</td><td class="diag">1.000</td></tr>
+          </table>
+
+          <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-dim); margin-top:4px;">
+            <span>Rigid Orthonormal Basis</span>
+            <span id="matrix-status">Normalized</span>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- =============================================================
+       MOBILE BOTTOM TOOLBAR
+  ============================================================= -->
+  <nav class="mobile-toolbar">
+    <button class="mobile-tab-btn" id="mob-btn-left">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h6v6h-6V5zm-6 0h4v4H6V5zm0 6h4v4H6v-4zm0 6h4v4H6v-4zm6 4v-6h6v6h-6z"/></svg>
+      <span>Controls</span>
+    </button>
+    <button class="mobile-tab-btn" id="mob-btn-slice">
+      <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11zM7 13l-5 9h10zM17 13l-5 9h10z"/></svg>
+      <span>Slicing</span>
+    </button>
+    <button class="mobile-tab-btn" id="mob-btn-part">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="4" r="2"/><circle cx="20" cy="12" r="2"/><circle cx="12" cy="20" r="2"/><circle cx="4" cy="12" r="2"/></svg>
+      <span>Physics</span>
+    </button>
+    <button class="mobile-tab-btn" id="mob-btn-record">
+      <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+      <span>Record</span>
+    </button>
+    <button class="mobile-tab-btn" id="mob-btn-audio">
+      <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      <span>Audio</span>
+    </button>
+    <button class="mobile-tab-btn" id="mob-btn-reset">
+      <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      <span>Reset</span>
+    </button>
+  </nav>
+
+  <!-- =============================================================
+       MODAL 1: DIMENSIONAL ACADEMY (INTERACTIVE 4D GUIDE)
+  ============================================================= -->
+  <div class="modal-backdrop" id="modal-academy">
+    <div class="modal-window">
+      <div class="modal-head">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--cyan)"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+          Dimensional Academy: Navigating the 4th Dimension
+        </h2>
+        <button class="panel-close-btn" id="btn-close-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Welcome to <strong>ChronoForge 4D</strong>. Human beings possess sensory apparatus attuned solely to 3 spatial dimensions (Length, Width, Height). The fourth spatial dimension ($W$) is mathematically real, perpendicular to every point in our 3D universe.
+        </p>
+
+        <div class="lesson-grid">
+          <div class="lesson-card">
+            <h4>1. The Flatland Analogy</h4>
+            <p>Imagine a 2D creature living on a flat tabletop. If a 3D sphere passes through the table, the 2D inhabitant sees a microscopic point appear from nowhere, expand into a growing circle, shrink, and vanish. In ChronoForge 4D, our 3D world is the "tabletop", and passing 4D solids form shifting 3D cross-sections!</p>
+          </div>
+
+          <div class="lesson-card">
+            <h4>2. The 6 Planes of 4D Rotation</h4>
+            <p>In 3D, objects rotate around an <em>axis</em> (1D line). But in 4D, rotations occur inside <em>planes</em> (2D invariant planes). With 4 coordinates $(X,Y,Z,W)$, there are $\binom{4}{2} = 6$ orthogonal rotational planes: $XY, XZ, YZ$ (ordinary 3D rotations) plus $XW, YW, ZW$ (rotations into the 4th dimension!).</p>
+          </div>
+
+          <div class="lesson-card">
+            <h4>3. Double Rotations (Clifford Flow)</h4>
+            <p>4D geometry permits simultaneous independent rotations in two orthogonal planes (e.g. $XY$ and $ZW$). When both planes rotate at identical speeds, it is an <em>isoclinic rotation</em>. Every point traces out concentric Villarceau circles with zero stationary points!</p>
+          </div>
+
+          <div class="lesson-card">
+            <h4>4. Salvador Dalí's Unfolded Net</h4>
+            <p>Just as a 3D cardboard cube can be cut along its edges and unfolded into a 2D cross made of 6 squares, a 4D Tesseract unfolds into 3D space as a cross made of <strong>8 cubes</strong>! Salvador Dalí immortalized this hyper-cross in his famous masterpiece <em>Crucifixion (Corpus Hypercubus)</em>.</p>
+          </div>
+
+          <div class="lesson-card">
+            <h4>5. The 600-Cell & 120-Cell</h4>
+            <p>The 600-Cell is composed of 120 golden vertices and 720 edges forming 600 tetrahedral cells! Its dual, the 120-Cell, has 600 vertices and 1200 edges, representing the ultimate crown jewel of 4D regular polychora.</p>
+          </div>
+
+          <div class="lesson-card">
+            <h4>6. 4D Bouncing Particles Chamber</h4>
+            <p>Particles in 4D move with 4D momentum vectors $(v_x, v_y, v_z, v_w)$, colliding with hypercube bounding walls $[-L, L]^4$. Bouncing off the $W = \pm L$ walls resonates crystalline audio frequencies into our 3D plane!</p>
+          </div>
+        </div>
+
+        <h3>Interactive Gestures & Tips</h3>
+        <ul style="padding-left: 20px; display:flex; flex-direction:column; gap:6px;">
+          <li><strong>Mouse Left Click / 1 Finger:</strong> Orbit 3D camera around the hyper-construct.</li>
+          <li><strong>Mouse Right Click / 2 Fingers:</strong> Rotate directly in 4D hyperplanes ($XW$ and $YW$).</li>
+          <li><strong>Scroll Wheel / Pinch:</strong> Zoom in/out (adjusts 4D focal distance).</li>
+          <li><strong>Slicing Chamber:</strong> Scrub the $W$-slider or toggle "Auto Scan" to slice the 4D construct into transforming 3D polyhedra!</li>
+          <li><strong>Record Studio:</strong> Capture smooth, seamless 360-degree looping animations exported as WebM video or animated GIFs.</li>
+        </ul>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-primary" id="btn-modal-ok">Explore 4D Space</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================================
+       MODAL 2: HIGH-RESOLUTION SNAPSHOT STUDIO
+  ============================================================= -->
+  <div class="modal-backdrop" id="modal-snapshot">
+    <div class="modal-window" style="max-width:540px;">
+      <div class="modal-head">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--cyan)"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>
+          4D Hologram Snapshot Studio
+        </h2>
+        <button class="panel-close-btn" id="btn-close-snap-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Export a crisp, ultra-high-definition PNG render of the current 4D geometric state.</p>
+        <div class="control-row">
+          <span class="control-label">Background Style:</span>
+          <select class="select-control" id="snap-bg-style">
+            <option value="void">Deep Cosmic Void (Dark Radial)</option>
+            <option value="transparent">Transparent PNG (Alpha Channel)</option>
+            <option value="blueprint">Cyber Blueprint (Technical Grid)</option>
+          </select>
+        </div>
+        <div class="control-row">
+          <span class="control-label">Watermark / Title:</span>
+          <select class="select-control" id="snap-watermark">
+            <option value="yes">Include Mathematical Metadata</option>
+            <option value="no">Clean Minimalist Hologram</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary" id="btn-snap-cancel">Cancel</button>
+        <button class="btn btn-primary" id="btn-snap-download">Download PNG</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================================
+       MODAL 3: ANIMATION SEQUENCE STUDIO (WEB-M / GIF RECORDER)
+  ============================================================= -->
+  <div class="modal-backdrop" id="modal-recorder">
+    <div class="modal-window" style="max-width:580px;">
+      <div class="modal-head">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--pink)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          4D Animation Sequence Studio
+        </h2>
+        <button class="panel-close-btn" id="btn-close-rec-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Record smooth, flawless 360-degree 4D rotation loops. Export as 60 FPS WebM video, animated GIF loop, or individual high-definition frame sequences.</p>
+
+        <div class="control-row">
+          <span class="control-label">Export Format:</span>
+          <select class="select-control" id="rec-format">
+            <option value="webm">WebM Video (60 FPS High Bitrate)</option>
+            <option value="gif">Animated GIF Looper (Pure JS Offline)</option>
+            <option value="png_keyframe">High-Res Keyframe Sequence (PNG)</option>
+          </select>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Loop Target:</span>
+          <select class="select-control" id="rec-target">
+            <option value="loop_xw">360° Seamless Hyper-Spin (XW Plane)</option>
+            <option value="loop_clifford">360° Clifford Isoclinic Double Spin</option>
+            <option value="loop_xy">360° Spatial Camera Orbit (XY Plane)</option>
+            <option value="current">Current Kinetic Speeds (Timed)</option>
+          </select>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Duration:</span>
+          <select class="select-control" id="rec-duration">
+            <option value="auto">1 Complete 360° Period (Exact Loop)</option>
+            <option value="3">3 Seconds</option>
+            <option value="5">5 Seconds</option>
+            <option value="8">8 Seconds</option>
+          </select>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Output Resolution:</span>
+          <select class="select-control" id="rec-resolution">
+            <option value="native">Native Viewport</option>
+            <option value="1080p">1080p Full HD (1920x1080)</option>
+            <option value="720p">720p HD (1280x720)</option>
+            <option value="square">Square 1:1 (720x720 Social)</option>
+          </select>
+        </div>
+
+        <!-- Recording Status Bar (Active during recording) -->
+        <div class="record-status-bar" id="rec-progress-box" style="display:none;">
+          <div class="rec-dot"></div>
+          <div style="flex:1;">
+            <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+              <span id="rec-progress-text" style="color:var(--cyan); font-weight:700;">Recording 360° Loop...</span>
+              <span id="rec-frame-count" style="font-family:var(--font-mono); color:var(--text-muted);">Frame 0 / 180</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="rec-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview Media Box (Displayed after recording finishes) -->
+        <div id="rec-result-section" style="display:none; flex-direction:column; gap:8px;">
+          <div style="font-size:11px; font-weight:700; color:var(--emerald);">RECORDING READY FOR DOWNLOAD</div>
+          <div class="preview-media-box" id="rec-media-container"></div>
+        </div>
+
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-secondary" id="btn-rec-cancel">Close</button>
+        <button class="btn btn-danger" id="btn-rec-stop" style="display:none;">Stop Recording</button>
+        <button class="btn btn-primary" id="btn-rec-start">Start 360° Recording</button>
+        <button class="btn btn-primary" id="btn-rec-download" style="display:none;">Download File</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =============================================================
+       VANILLA JAVASCRIPT: 4D MATHEMATICS, SOUND, AND RENDERING ENGINE
+  ============================================================= -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* =============================================================
+       1. 4D MATHEMATICS & SO(4) MATRIX ENGINE
+    ============================================================= */
+    const Math4D = {
+      // Create a 4x4 identity matrix
+      createIdentity() {
+        return [
+          [1, 0, 0, 0],
+          [0, 1, 0, 0],
+          [0, 0, 1, 0],
+          [0, 0, 0, 1]
+        ];
+      },
+
+      // Multiply two 4x4 matrices: C = A * B
+      multiplyMatrix(A, B) {
+        const C = [
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ];
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < 4; j++) {
+            C[i][j] = A[i][0] * B[0][j] +
+                      A[i][1] * B[1][j] +
+                      A[i][2] * B[2][j] +
+                      A[i][3] * B[3][j];
+          }
+        }
+        return C;
+      },
+
+      // Multiply 4x4 matrix with 4D vector: v' = M * v
+      transformVector(M, v) {
+        return [
+          M[0][0] * v[0] + M[0][1] * v[1] + M[0][2] * v[2] + M[0][3] * v[3],
+          M[1][0] * v[0] + M[1][1] * v[1] + M[1][2] * v[2] + M[1][3] * v[3],
+          M[2][0] * v[0] + M[2][1] * v[1] + M[2][2] * v[2] + M[2][3] * v[3],
+          M[3][0] * v[0] + M[3][1] * v[1] + M[3][2] * v[2] + M[3][3] * v[3]
+        ];
+      },
+
+      // Distance in 4D space
+      dist4D(v1, v2) {
+        const dx = v1[0] - v2[0];
+        const dy = v1[1] - v2[1];
+        const dz = v1[2] - v2[2];
+        const dw = v1[3] - v2[3];
+        return Math.sqrt(dx*dx + dy*dy + dz*dz + dw*dw);
+      },
+
+      // Dot product in 4D
+      dot4D(a, b) {
+        return a[0]*b[0] + a[1]*b[1] + a[2]*b[2] + a[3]*b[3];
+      },
+
+      // Norm in 4D
+      norm4D(v) {
+        return Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2] + v[3]*v[3]);
+      },
+
+      // Elementary 4D rotation matrices in the 6 canonical planes:
+      // XY Plane
+      rotXY(theta) {
+        const c = Math.cos(theta), s = Math.sin(theta);
+        return [
+          [ c, -s,  0,  0],
+          [ s,  c,  0,  0],
+          [ 0,  0,  1,  0],
+          [ 0,  0,  0,  1]
+        ];
+      },
+      // XZ Plane
+      rotXZ(theta) {
+        const c = Math.cos(theta), s = Math.sin(theta);
+        return [
+          [ c,  0, -s,  0],
+          [ 0,  1,  0,  0],
+          [ s,  0,  c,  0],
+          [ 0,  0,  0,  1]
+        ];
+      },
+      // YZ Plane
+      rotYZ(theta) {
+        const c = Math.cos(theta), s = Math.sin(theta);
+        return [
+          [ 1,  0,  0,  0],
+          [ 0,  c, -s,  0],
+          [ 0,  s,  c,  0],
+          [ 0,  0,  0,  1]
+        ];
+      },
+      // XW Plane (Rotation into 4th Dimension)
+      rotXW(theta) {
+        const c = Math.cos(theta), s = Math.sin(theta);
+        return [
+          [ c,  0,  0, -s],
+          [ 0,  1,  0,  0],
+          [ 0,  0,  1,  0],
+          [ s,  0,  0,  c]
+        ];
+      },
+      // YW Plane
+      rotYW(theta) {
+        const c = Math.cos(theta), s = Math.sin(theta);
+        return [
+          [ 1,  0,  0,  0],
+          [ 0,  c,  0, -s],
+          [ 0,  0,  1,  0],
+          [ 0,  s,  0,  c]
+        ];
+      },
+      // ZW Plane
+      rotZW(theta) {
+        const c = Math.cos(theta), s = Math.sin(theta);
+        return [
+          [ 1,  0,  0,  0],
+          [ 0,  1,  0,  0],
+          [ 0,  0,  c, -s],
+          [ 0,  0,  s,  c]
+        ];
+      },
+
+      // Gram-Schmidt Orthonormalization to eliminate accumulation drift
+      orthonormalize(M) {
+        const cols = [
+          [M[0][0], M[1][0], M[2][0], M[3][0]],
+          [M[0][1], M[1][1], M[2][1], M[3][1]],
+          [M[0][2], M[1][2], M[2][2], M[3][2]],
+          [M[0][3], M[1][3], M[2][3], M[3][3]]
+        ];
+
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < i; j++) {
+            const dot = cols[i][0] * cols[j][0] +
+                        cols[i][1] * cols[j][1] +
+                        cols[i][2] * cols[j][2] +
+                        cols[i][3] * cols[j][3];
+            for (let k = 0; k < 4; k++) {
+              cols[i][k] -= dot * cols[j][k];
+            }
+          }
+          const len = Math.hypot(...cols[i]);
+          if (len > 1e-8) {
+            for (let k = 0; k < 4; k++) {
+              cols[i][k] /= len;
+            }
+          }
+        }
+
+        const res = [
+          [cols[0][0], cols[1][0], cols[2][0], cols[3][0]],
+          [cols[0][1], cols[1][1], cols[2][1], cols[3][1]],
+          [cols[0][2], cols[1][2], cols[2][2], cols[3][2]],
+          [cols[0][3], cols[1][3], cols[2][3], cols[3][3]]
+        ];
+        return res;
+      },
+
+      // Determinant of 4x4 matrix
+      determinant(m) {
+        return (
+          m[0][3] * m[1][2] * m[2][1] * m[3][0] - m[0][2] * m[1][3] * m[2][1] * m[3][0] -
+          m[0][3] * m[1][1] * m[2][2] * m[3][0] + m[0][1] * m[1][3] * m[2][2] * m[3][0] +
+          m[0][2] * m[1][1] * m[2][3] * m[3][0] - m[0][1] * m[1][2] * m[2][3] * m[3][0] -
+          m[0][3] * m[1][2] * m[2][0] * m[3][1] + m[0][2] * m[1][3] * m[2][0] * m[3][1] +
+          m[0][3] * m[1][0] * m[2][2] * m[3][1] - m[0][0] * m[1][3] * m[2][2] * m[3][1] -
+          m[0][2] * m[1][0] * m[2][3] * m[3][1] + m[0][0] * m[1][2] * m[2][3] * m[3][1] +
+          m[0][3] * m[1][1] * m[2][0] * m[3][2] - m[0][1] * m[1][3] * m[2][0] * m[3][2] -
+          m[0][3] * m[1][0] * m[2][1] * m[3][2] + m[0][0] * m[1][3] * m[2][1] * m[3][2] +
+          m[0][1] * m[1][0] * m[2][3] * m[3][2] - m[0][0] * m[1][1] * m[2][3] * m[3][2] -
+          m[0][2] * m[1][1] * m[2][0] * m[3][3] + m[0][1] * m[1][2] * m[2][0] * m[3][3] +
+          m[0][2] * m[1][0] * m[2][1] * m[3][3] - m[0][0] * m[1][2] * m[2][1] * m[3][3] -
+          m[0][1] * m[1][0] * m[2][2] * m[3][3] + m[0][0] * m[1][1] * m[2][2] * m[3][3]
+        );
+      }
+    };
+
+
+    /* =============================================================
+       2. POLYTOPE & HYPER-SHAPE GENERATORS
+    ============================================================= */
+    const PolytopeLibrary = {
+      // 1. Tesseract (8-Cell / Hypercube)
+      // 16 vertices, 32 edges, 24 square faces, 8 cubic cells
+      createTesseract() {
+        const vertices = [];
+        for (let i = 0; i < 16; i++) {
+          const x = (i & 1) ? 1 : -1;
+          const y = (i & 2) ? 1 : -1;
+          const z = (i & 4) ? 1 : -1;
+          const w = (i & 8) ? 1 : -1;
+          vertices.push([x, y, z, w]);
+        }
+
+        const edges = [];
+        for (let i = 0; i < 16; i++) {
+          for (let j = i + 1; j < 16; j++) {
+            const diff = i ^ j;
+            if (diff === 1 || diff === 2 || diff === 4 || diff === 8) {
+              edges.push([i, j]);
+            }
+          }
+        }
+
+        // 24 Square 2D Faces
+        const faces = [];
+        const axes = [1, 2, 4, 8];
+        for (let a = 0; a < 4; a++) {
+          for (let b = a + 1; b < 4; b++) {
+            const maskA = axes[a];
+            const maskB = axes[b];
+            for (let i = 0; i < 16; i++) {
+              if (!(i & maskA) && !(i & maskB)) {
+                faces.push([i, i | maskA, i | maskA | maskB, i | maskB]);
+              }
+            }
+          }
+        }
+
+        // 8 Cubic 3D Cells
+        const cells = [];
+        const getCell = (dimMask, bitVal) => {
+          const cVerts = [];
+          for (let i = 0; i < 16; i++) {
+            if (Boolean(i & dimMask) === bitVal) cVerts.push(i);
+          }
+          return cVerts;
+        };
+
+        cells.push({ name: 'Cell 0 (W=+1)', vertices: getCell(8, true) });
+        cells.push({ name: 'Cell 1 (W=-1)', vertices: getCell(8, false) });
+        cells.push({ name: 'Cell 2 (X=+1)', vertices: getCell(1, true) });
+        cells.push({ name: 'Cell 3 (X=-1)', vertices: getCell(1, false) });
+        cells.push({ name: 'Cell 4 (Y=+1)', vertices: getCell(2, true) });
+        cells.push({ name: 'Cell 5 (Y=-1)', vertices: getCell(2, false) });
+        cells.push({ name: 'Cell 6 (Z=+1)', vertices: getCell(4, true) });
+        cells.push({ name: 'Cell 7 (Z=-1)', vertices: getCell(4, false) });
+
+        return {
+          name: 'Tesseract (8-Cell)',
+          schlafli: '{4,3,3}',
+          radius: 2.0,
+          vertices,
+          edges,
+          faces,
+          cells,
+          supportUnfold: true
+        };
+      },
+
+      // 2. 16-Cell (Hexadecachoron / Hyperoctahedron)
+      // 8 vertices, 24 edges, 32 triangular faces, 16 tetrahedral cells
+      create16Cell() {
+        const vertices = [];
+        for (let dim = 0; dim < 4; dim++) {
+          for (let sign of [-1.414, 1.414]) {
+            const v = [0, 0, 0, 0];
+            v[dim] = sign;
+            vertices.push(v);
+          }
+        }
+
+        const edges = [];
+        for (let i = 0; i < 8; i++) {
+          for (let j = i + 1; j < 8; j++) {
+            if (Math.floor(i / 2) !== Math.floor(j / 2)) {
+              edges.push([i, j]);
+            }
+          }
+        }
+
+        const faces = [];
+        for (let i = 0; i < 8; i++) {
+          for (let j = i + 1; j < 8; j++) {
+            if (Math.floor(i / 2) === Math.floor(j / 2)) continue;
+            for (let k = j + 1; k < 8; k++) {
+              if (Math.floor(k / 2) === Math.floor(i / 2) || Math.floor(k / 2) === Math.floor(j / 2)) continue;
+              faces.push([i, j, k]);
+            }
+          }
+        }
+
+        return {
+          name: '16-Cell (Hexadecachoron)',
+          schlafli: '{3,3,4}',
+          radius: 1.414,
+          vertices,
+          edges,
+          faces,
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 3. 24-Cell (Icositetrachoron - Unique regular polytope in 4D!)
+      // 24 vertices, 96 edges, 96 triangular faces, 24 octahedral cells
+      create24Cell() {
+        const vertices = [];
+        for (let dim = 0; dim < 4; dim++) {
+          for (let sign of [-1.414, 1.414]) {
+            const v = [0, 0, 0, 0];
+            v[dim] = sign;
+            vertices.push(v);
+          }
+        }
+        for (let i = 0; i < 16; i++) {
+          const x = (i & 1 ? 0.707 : -0.707);
+          const y = (i & 2 ? 0.707 : -0.707);
+          const z = (i & 4 ? 0.707 : -0.707);
+          const w = (i & 8 ? 0.707 : -0.707);
+          vertices.push([x, y, z, w]);
+        }
+
+        const edges = [];
+        for (let i = 0; i < 24; i++) {
+          for (let j = i + 1; j < 24; j++) {
+            const dx = vertices[i][0] - vertices[j][0];
+            const dy = vertices[i][1] - vertices[j][1];
+            const dz = vertices[i][2] - vertices[j][2];
+            const dw = vertices[i][3] - vertices[j][3];
+            const d2 = dx*dx + dy*dy + dz*dz + dw*dw;
+            if (Math.abs(d2 - 2.0) < 0.25) {
+              edges.push([i, j]);
+            }
+          }
+        }
+
+        const faces = [];
+        const adj = Array.from({ length: 24 }, () => new Set());
+        for (const [a, b] of edges) {
+          adj[a].add(b);
+          adj[b].add(a);
+        }
+        for (let i = 0; i < 24; i++) {
+          for (let j of adj[i]) {
+            if (j <= i) continue;
+            for (let k of adj[j]) {
+              if (k <= j) continue;
+              if (adj[i].has(k)) {
+                faces.push([i, j, k]);
+              }
+            }
+          }
+        }
+
+        return {
+          name: '24-Cell (Icositetrachoron)',
+          schlafli: '{3,4,3}',
+          radius: 1.414,
+          vertices,
+          edges,
+          faces,
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 4. 5-Cell (Pentachoron / 4-Simplex)
+      create5Cell() {
+        const c = 1 / Math.sqrt(5);
+        const s = 1.3;
+        const rawVerts = [
+          [1, 1, 1, -c],
+          [1, -1, -1, -c],
+          [-1, 1, -1, -c],
+          [-1, -1, 1, -c],
+          [0, 0, 0, 4 * c]
+        ];
+        const vertices = rawVerts.map(v => [v[0]*s*0.7, v[1]*s*0.7, v[2]*s*0.7, v[3]*s*0.7]);
+
+        const edges = [];
+        for (let i = 0; i < 5; i++) {
+          for (let j = i + 1; j < 5; j++) {
+            edges.push([i, j]);
+          }
+        }
+
+        const faces = [];
+        for (let i = 0; i < 5; i++) {
+          for (let j = i + 1; j < 5; j++) {
+            for (let k = j + 1; k < 5; k++) {
+              faces.push([i, j, k]);
+            }
+          }
+        }
+
+        return {
+          name: '5-Cell (Pentachoron)',
+          schlafli: '{3,3,3}',
+          radius: 1.5,
+          vertices,
+          edges,
+          faces,
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 5. 600-Cell (Hexacosichoron) - 120 Vertices, 720 Edges, 1200 Triangular Faces
+      create600Cell() {
+        const phi = (1 + Math.sqrt(5)) / 2;
+        const invPhi = (Math.sqrt(5) - 1) / 2;
+        const rawVerts = [];
+
+        // 8 axis vertices: (±2, 0, 0, 0)
+        for (let d = 0; d < 4; d++) {
+          for (let s of [-2, 2]) {
+            const v = [0, 0, 0, 0];
+            v[d] = s;
+            rawVerts.push(v);
+          }
+        }
+
+        // 16 hypercube vertices: (±1, ±1, ±1, ±1)
+        for (let i = 0; i < 16; i++) {
+          rawVerts.push([
+            (i & 1) ? 1 : -1,
+            (i & 2) ? 1 : -1,
+            (i & 4) ? 1 : -1,
+            (i & 8) ? 1 : -1
+          ]);
+        }
+
+        // 96 even permutations of (±phi, ±1, ±invPhi, 0)
+        const evenPerms = [
+          [0,1,2,3], [0,2,3,1], [0,3,1,2],
+          [1,0,3,2], [1,2,0,3], [1,3,2,0],
+          [2,0,1,3], [2,1,3,0], [2,3,0,1],
+          [3,0,2,1], [3,1,0,2], [3,2,1,0]
+        ];
+        const base = [phi, 1, invPhi, 0];
+        for (let perm of evenPerms) {
+          for (let s0 of [-1, 1]) {
+            for (let s1 of [-1, 1]) {
+              for (let s2 of [-1, 1]) {
+                const v = [0, 0, 0, 0];
+                v[perm[0]] = base[0] * s0;
+                v[perm[1]] = base[1] * s1;
+                v[perm[2]] = base[2] * s2;
+                v[perm[3]] = 0;
+                rawVerts.push(v);
+              }
+            }
+          }
+        }
+
+        // Scale so radius is 1.4 for viewport
+        const scale = 1.4 / 2.0;
+        const vertices = rawVerts.map(v => [v[0]*scale, v[1]*scale, v[2]*scale, v[3]*scale]);
+
+        // Edges: Distance in unscaled coords is 2 / phi ≈ 1.236068 (d² ≈ 1.52786)
+        const targetD2 = (2 / phi) ** 2 * scale * scale;
+        const edges = [];
+        for (let i = 0; i < vertices.length; i++) {
+          for (let j = i + 1; j < vertices.length; j++) {
+            const dx = vertices[i][0] - vertices[j][0];
+            const dy = vertices[i][1] - vertices[j][1];
+            const dz = vertices[i][2] - vertices[j][2];
+            const dw = vertices[i][3] - vertices[j][3];
+            const d2 = dx*dx + dy*dy + dz*dz + dw*dw;
+            if (Math.abs(d2 - targetD2) < 0.04) {
+              edges.push([i, j]);
+            }
+          }
+        }
+
+        // Triangular faces (sampled for performance and clean aesthetic)
+        const faces = [];
+        const adj = Array.from({ length: vertices.length }, () => new Set());
+        for (const [a, b] of edges) {
+          adj[a].add(b);
+          adj[b].add(a);
+        }
+        for (let i = 0; i < vertices.length; i++) {
+          for (let j of adj[i]) {
+            if (j <= i) continue;
+            for (let k of adj[j]) {
+              if (k <= j) continue;
+              if (adj[i].has(k)) {
+                faces.push([i, j, k]);
+                if (faces.length >= 300) break; // Keep high-density responsive subset
+              }
+            }
+            if (faces.length >= 300) break;
+          }
+          if (faces.length >= 300) break;
+        }
+
+        return {
+          name: '600-Cell (Hexacosichoron)',
+          schlafli: '{3,3,5}',
+          radius: 1.4,
+          vertices,
+          edges,
+          faces,
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 6. Grand 120-Cell Wireframe ({5,3,5/2} - Stellated 4D Jewel)
+      createGrand120Cell() {
+        const phi = (1 + Math.sqrt(5)) / 2;
+        const invPhi = (Math.sqrt(5) - 1) / 2;
+        const rawVerts = [];
+
+        // 120 golden vertices
+        for (let d = 0; d < 4; d++) {
+          for (let s of [-2, 2]) {
+            const v = [0, 0, 0, 0]; v[d] = s; rawVerts.push(v);
+          }
+        }
+        for (let i = 0; i < 16; i++) {
+          rawVerts.push([(i & 1) ? 1 : -1, (i & 2) ? 1 : -1, (i & 4) ? 1 : -1, (i & 8) ? 1 : -1]);
+        }
+        const evenPerms = [
+          [0,1,2,3], [0,2,3,1], [0,3,1,2],
+          [1,0,3,2], [1,2,0,3], [1,3,2,0],
+          [2,0,1,3], [2,1,3,0], [2,3,0,1],
+          [3,0,2,1], [3,1,0,2], [3,2,1,0]
+        ];
+        const base = [phi, 1, invPhi, 0];
+        for (let perm of evenPerms) {
+          for (let s0 of [-1, 1]) {
+            for (let s1 of [-1, 1]) {
+              for (let s2 of [-1, 1]) {
+                const v = [0, 0, 0, 0];
+                v[perm[0]] = base[0] * s0;
+                v[perm[1]] = base[1] * s1;
+                v[perm[2]] = base[2] * s2;
+                rawVerts.push(v);
+              }
+            }
+          }
+        }
+
+        const scale = 1.35 / 2.0;
+        const vertices = rawVerts.map(v => [v[0]*scale, v[1]*scale, v[2]*scale, v[3]*scale]);
+
+        // Stellated edges: Pentagram chord distance in 4D (distance 2.0 in unscaled coordinates)
+        const targetD2 = 4.0 * scale * scale;
+        const edges = [];
+        for (let i = 0; i < vertices.length; i++) {
+          for (let j = i + 1; j < vertices.length; j++) {
+            const dx = vertices[i][0] - vertices[j][0];
+            const dy = vertices[i][1] - vertices[j][1];
+            const dz = vertices[i][2] - vertices[j][2];
+            const dw = vertices[i][3] - vertices[j][3];
+            const d2 = dx*dx + dy*dy + dz*dz + dw*dw;
+            if (Math.abs(d2 - targetD2) < 0.08) {
+              edges.push([i, j]);
+            }
+          }
+        }
+
+        return {
+          name: 'Grand 120-Cell',
+          schlafli: '{5,3,5/2}',
+          radius: 1.35,
+          vertices,
+          edges,
+          faces: [],
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 7. Regular 120-Cell ({5,3,3} - 600 Vertices, 1200 Edges)
+      create120Cell() {
+        const phi = (1 + Math.sqrt(5)) / 2;
+        const invPhi = (Math.sqrt(5) - 1) / 2;
+        const phi2 = phi * phi;
+        const invPhi2 = 1 / phi2;
+        const sqrt5 = Math.sqrt(5);
+
+        const verts = [];
+        const seen = new Set();
+        function addV(v) {
+          const key = v.map(x => x.toFixed(3)).join(',');
+          if (!seen.has(key)) {
+            seen.add(key);
+            verts.push(v);
+          }
+        }
+
+        function allSigns(arr) {
+          const res = [];
+          for (let i = 0; i < 16; i++) {
+            res.push([
+              (i & 1) ? -arr[0] : arr[0],
+              (i & 2) ? -arr[1] : arr[1],
+              (i & 4) ? -arr[2] : arr[2],
+              (i & 8) ? -arr[3] : arr[3]
+            ]);
+          }
+          return res;
+        }
+
+        function allPerms(arr) {
+          if (arr.length <= 1) return [arr];
+          const res = [];
+          for (let i = 0; i < arr.length; i++) {
+            const rem = arr.slice(0, i).concat(arr.slice(i + 1));
+            for (let p of allPerms(rem)) res.push([arr[i], ...p]);
+          }
+          return res;
+        }
+
+        const evenPerms = [
+          [0,1,2,3], [0,2,3,1], [0,3,1,2],
+          [1,0,3,2], [1,2,0,3], [1,3,2,0],
+          [2,0,1,3], [2,1,3,0], [2,3,0,1],
+          [3,0,2,1], [3,1,0,2], [3,2,1,0]
+        ];
+
+        for (let p of allPerms([2, 2, 0, 0])) { for (let s of allSigns(p)) addV(s); }
+        for (let p of allPerms([sqrt5, 1, 1, 1])) { for (let s of allSigns(p)) addV(s); }
+        for (let p of allPerms([phi, phi, phi, invPhi2])) { for (let s of allSigns(p)) addV(s); }
+        for (let p of allPerms([phi2, invPhi, invPhi, invPhi])) { for (let s of allSigns(p)) addV(s); }
+
+        for (let perm of evenPerms) {
+          const p1 = [phi2, 1, invPhi2, 0];
+          for (let s of allSigns([p1[perm[0]], p1[perm[1]], p1[perm[2]], p1[perm[3]]])) addV(s);
+          const p2 = [sqrt5, phi, invPhi, 0];
+          for (let s of allSigns([p2[perm[0]], p2[perm[1]], p2[perm[2]], p2[perm[3]]])) addV(s);
+          const p3 = [2, phi, 1, invPhi];
+          for (let s of allSigns([p3[perm[0]], p3[perm[1]], p3[perm[2]], p3[perm[3]]])) addV(s);
+        }
+
+        // Scale to 1.45 radius for smooth viewport rendering
+        const scale = 1.45 / Math.sqrt(8);
+        const vertices = verts.map(v => [v[0]*scale, v[1]*scale, v[2]*scale, v[3]*scale]);
+
+        // 120-Cell Edges: Target d² ≈ 0.58359 in unscaled radius sqrt(8)
+        const targetD2 = (14 - 6 * sqrt5) * scale * scale;
+        const edges = [];
+        for (let i = 0; i < vertices.length; i++) {
+          for (let j = i + 1; j < vertices.length; j++) {
+            const dx = vertices[i][0] - vertices[j][0];
+            const dy = vertices[i][1] - vertices[j][1];
+            const dz = vertices[i][2] - vertices[j][2];
+            const dw = vertices[i][3] - vertices[j][3];
+            const d2 = dx*dx + dy*dy + dz*dz + dw*dw;
+            if (Math.abs(d2 - targetD2) < 0.035) {
+              edges.push([i, j]);
+            }
+          }
+        }
+
+        return {
+          name: '120-Cell (Hecatonicosachoron)',
+          schlafli: '{5,3,3}',
+          radius: 1.45,
+          vertices,
+          edges,
+          faces: [],
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 8. 3-Sphere (Glome S³ Mesh & Hopf Fibration Circles)
+      createHypersphere() {
+        const vertices = [];
+        const edges = [];
+        const faces = [];
+        const R = 1.35;
+
+        const numCircles = 16;
+        const ptsPerCircle = 24;
+
+        for (let c = 0; c < numCircles; c++) {
+          const theta = Math.acos(1 - 2 * (c + 0.5) / numCircles);
+          const phi = Math.PI * (1 + Math.sqrt(5)) * c;
+
+          const baseIdx = vertices.length;
+          for (let p = 0; p < ptsPerCircle; p++) {
+            const xi = (2 * Math.PI * p) / ptsPerCircle;
+            const z1_re = Math.cos(theta / 2) * Math.cos(xi + phi / 2);
+            const z1_im = Math.cos(theta / 2) * Math.sin(xi + phi / 2);
+            const z2_re = Math.sin(theta / 2) * Math.cos(xi - phi / 2);
+            const z2_im = Math.sin(theta / 2) * Math.sin(xi - phi / 2);
+
+            vertices.push([z1_re * R, z1_im * R, z2_re * R, z2_im * R]);
+
+            const nextP = (p + 1) % ptsPerCircle;
+            edges.push([baseIdx + p, baseIdx + nextP]);
+          }
+        }
+
+        const addGreatCircle = (d1, d2) => {
+          const bIdx = vertices.length;
+          const steps = 36;
+          for (let i = 0; i < steps; i++) {
+            const ang = (2 * Math.PI * i) / steps;
+            const v = [0, 0, 0, 0];
+            v[d1] = Math.cos(ang) * R;
+            v[d2] = Math.sin(ang) * R;
+            vertices.push(v);
+            edges.push([bIdx + i, bIdx + ((i + 1) % steps)]);
+          }
+        };
+        addGreatCircle(0, 3);
+        addGreatCircle(1, 3);
+        addGreatCircle(2, 3);
+        addGreatCircle(0, 1);
+
+        return {
+          name: '3-Sphere (Glome)',
+          schlafli: 'S³ (Hopf)',
+          radius: R,
+          vertices,
+          edges,
+          faces,
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 9. Clifford Torus (Flat Duocylinder in S³)
+      createCliffordTorus() {
+        const vertices = [];
+        const edges = [];
+        const faces = [];
+        const r = 1.0;
+        const uSteps = 18;
+        const vSteps = 18;
+
+        for (let i = 0; i < uSteps; i++) {
+          const u = (2 * Math.PI * i) / uSteps;
+          for (let j = 0; j < vSteps; j++) {
+            const v = (2 * Math.PI * j) / vSteps;
+            vertices.push([
+              r * Math.cos(u),
+              r * Math.sin(u),
+              r * Math.cos(v),
+              r * Math.sin(v)
+            ]);
+
+            const cur = i * vSteps + j;
+            const nextU = ((i + 1) % uSteps) * vSteps + j;
+            const nextV = i * vSteps + ((j + 1) % vSteps);
+            const diag = ((i + 1) % uSteps) * vSteps + ((j + 1) % vSteps);
+
+            edges.push([cur, nextU]);
+            edges.push([cur, nextV]);
+            edges.push([cur, diag]); // Villarceau helical diagonal
+
+            faces.push([cur, nextU, diag, nextV]);
+          }
+        }
+
+        return {
+          name: 'Clifford Torus',
+          schlafli: 'T² ⊂ S³',
+          radius: 1.414,
+          vertices,
+          edges,
+          faces,
+          cells: [],
+          supportUnfold: false
+        };
+      },
+
+      // 10. Non-Intersecting Klein Bottle in 4D Space
+      createKleinBottle4D() {
+        const vertices = [];
+        const edges = [];
+        const faces = [];
+        const uSteps = 24;
+        const vSteps = 18;
+        const r = 1.15;
+
+        for (let i = 0; i < uSteps; i++) {
+          const u = (2 * Math.PI * i) / uSteps;
+          for (let j = 0; j < vSteps; j++) {
+            const v = (2 * Math.PI * j) / vSteps;
+
+            const cosU = Math.cos(u), sinU = Math.sin(u);
+            const cosV = Math.cos(v), sinV = Math.sin(v);
+            const cosU2 = Math.cos(u / 2), sinU2 = Math.sin(u / 2);
+            const sin2V = Math.sin(2 * v);
+
+            const x = (r + cosU2 * sinV - sinU2 * sin2V) * cosU * 0.75;
+            const y = (r + cosU2 * sinV - sinU2 * sin2V) * sinU * 0.75;
+            const z = (sinU2 * sinV + cosU2 * sin2V) * 0.95;
+            const w = cosU2 * cosV * 0.95;
+
+            vertices.push([x, y, z, w]);
+
+            const cur = i * vSteps + j;
+            const nextU = ((i + 1) % uSteps) * vSteps + j;
+            const nextV = i * vSteps + ((j + 1) % vSteps);
+            const diag = ((i + 1) % uSteps) * vSteps + ((j + 1) % vSteps);
+
+            edges.push([cur, nextU]);
+            edges.push([cur, nextV]);
+            faces.push([cur, nextU, diag, nextV]);
+          }
+        }
+
+        return {
+          name: 'Klein Bottle 4D',
+          schlafli: 'KB ⊂ ℝ⁴',
+          radius: 1.4,
+          vertices,
+          edges,
+          faces,
+          cells: [],
+          supportUnfold: false
+        };
+      }
+    };
+
+
+    /* =============================================================
+       3. SALVADOR DALÍ HYPER-CROSS 4D NET UNFOLDING ENGINE
+    ============================================================= */
+    const NetUnfolder = {
+      // Unfolds a 4D Hypercube into Salvador Dalí's 3D Latin Cross (8 cubes)
+      // u: 0.0 (4D Folded Hypercube) -> 1.0 (3D Unfolded Latin Net)
+      getDaliNet(u) {
+        const theta = u * (Math.PI / 2); // 0 to 90 degrees
+        const sinT = Math.sin(theta);
+        const cosT = Math.cos(theta);
+
+        // Helper: 8 vertices for a standard unit cube in [-1, 1]³
+        const localCubeVerts = [];
+        for (let i = 0; i < 8; i++) {
+          localCubeVerts.push([
+            (i & 1) ? 1 : -1,
+            (i & 2) ? 1 : -1,
+            (i & 4) ? 1 : -1
+          ]);
+        }
+
+        // Standard 12 edges for a cube
+        const cubeEdges = [
+          [0,1],[2,3],[4,5],[6,7], // X-parallel
+          [0,2],[1,3],[4,6],[5,7], // Y-parallel
+          [0,4],[1,5],[2,6],[3,7]  // Z-parallel
+        ];
+
+        // 6 Square Faces for a cube
+        const cubeFaces = [
+          [0, 1, 3, 2], // Z = -1
+          [4, 5, 7, 6], // Z = +1
+          [0, 1, 5, 4], // Y = -1
+          [2, 3, 7, 6], // Y = +1
+          [0, 2, 6, 4], // X = -1
+          [1, 3, 7, 5]  // X = +1
+        ];
+
+        const cubes = [];
+
+        // 1. C0: Base Central Cube (W = -1)
+        cubes.push({
+          name: 'Center Cube (Base)',
+          color: '#00f0ff',
+          vertices: localCubeVerts.map(([x,y,z]) => [x, y, z, -1])
+        });
+
+        // 2. C1: Right (+X) Cube - Hinges around X = +1, W = -1
+        cubes.push({
+          name: 'Right Arm (+X)',
+          color: '#38bdf8',
+          vertices: localCubeVerts.map(([lx, ly, lz]) => {
+            const w_orig = lx;
+            const x_rot = 1 + (w_orig + 1) * sinT;
+            const w_rot = -1 + (w_orig + 1) * cosT;
+            return [x_rot, ly, lz, w_rot];
+          })
+        });
+
+        // 3. C2: Left (-X) Cube - Hinges around X = -1, W = -1
+        cubes.push({
+          name: 'Left Arm (-X)',
+          color: '#818cf8',
+          vertices: localCubeVerts.map(([lx, ly, lz]) => {
+            const w_orig = -lx;
+            const x_rot = -1 - (w_orig + 1) * sinT;
+            const w_rot = -1 + (w_orig + 1) * cosT;
+            return [x_rot, ly, lz, w_rot];
+          })
+        });
+
+        // 4. C3: Top (+Y) Cube - Hinges around Y = +1, W = -1
+        cubes.push({
+          name: 'Top Pillar (+Y)',
+          color: '#a855f7',
+          vertices: localCubeVerts.map(([lx, ly, lz]) => {
+            const w_orig = ly;
+            const y_rot = 1 + (w_orig + 1) * sinT;
+            const w_rot = -1 + (w_orig + 1) * cosT;
+            return [lx, y_rot, lz, w_rot];
+          })
+        });
+
+        // 5. C4: Bottom (-Y) Cube - Hinges around Y = -1, W = -1
+        cubes.push({
+          name: 'Bottom Pillar (-Y)',
+          color: '#c084fc',
+          vertices: localCubeVerts.map(([lx, ly, lz]) => {
+            const w_orig = -ly;
+            const y_rot = -1 - (w_orig + 1) * sinT;
+            const w_rot = -1 + (w_orig + 1) * cosT;
+            return [lx, y_rot, lz, w_rot];
+          })
+        });
+
+        // 6. C5: Front (+Z) Cube - Hinges around Z = +1, W = -1
+        cubes.push({
+          name: 'Front Arm (+Z)',
+          color: '#ec4899',
+          vertices: localCubeVerts.map(([lx, ly, lz]) => {
+            const w_orig = lz;
+            const z_rot = 1 + (w_orig + 1) * sinT;
+            const w_rot = -1 + (w_orig + 1) * cosT;
+            return [lx, ly, z_rot, w_rot];
+          })
+        });
+
+        // 7. C6: Back (-Z) Cube - Hinges around Z = -1, W = -1
+        cubes.push({
+          name: 'Back Arm (-Z)',
+          color: '#f43f5e',
+          vertices: localCubeVerts.map(([lx, ly, lz]) => {
+            const w_orig = -lz;
+            const z_rot = -1 - (w_orig + 1) * sinT;
+            const w_rot = -1 + (w_orig + 1) * cosT;
+            return [lx, ly, z_rot, w_rot];
+          })
+        });
+
+        // 8. C7: Crown (+Y above C3) - Double Hinge around C3 top face
+        // Hinges 90° with C3 and an additional 90° relative to C3
+        cubes.push({
+          name: 'Crown Cube (Upper +Y)',
+          color: '#f59e0b',
+          vertices: localCubeVerts.map(([lx, ly, lz]) => {
+            const H2_Y = 1 + 2 * sinT;
+            const H2_W = -1 + 2 * cosT;
+            const y_rot = H2_Y + (ly - 1) * Math.cos(2 * theta);
+            const w_rot = H2_W + (ly - 1) * Math.sin(2 * theta);
+            return [lx, y_rot, lz, w_rot];
+          })
+        });
+
+        return {
+          cubes,
+          cubeEdges,
+          cubeFaces
+        };
+      }
+    };
+
+
+    /* =============================================================
+       4. 4D BOUNCING PARTICLE CHAMBER PHYSICS ENGINE
+    ============================================================= */
+    class ParticleChamber4D {
+      constructor(count = 45) {
+        this.particles = [];
+        this.ripples = [];
+        this.boundary = 'box'; // 'box' | 'sphere'
+        this.gravityMode = 'none'; // 'none' | 'w_grav' | 'y_grav' | 'vortex'
+        this.speedMult = 1.0;
+        this.elasticity = 0.96;
+        this.boxL = 1.35;
+        this.sphereR = 1.45;
+        this.collideParticles = true;
+        this.showTrails = true;
+        this.interactiveForce = null; // Mouse attractor/repeller in 4D
+        this.init(count);
+      }
+
+      init(count) {
+        this.particles = [];
+        this.ripples = [];
+        for (let i = 0; i < count; i++) {
+          this.spawnParticle();
+        }
+      }
+
+      spawnParticle() {
+        const L = this.boxL * 0.7;
+        const speed = (0.012 + Math.random() * 0.018) * this.speedMult;
+        // Random 4D direction vector
+        let vx = (Math.random() - 0.5);
+        let vy = (Math.random() - 0.5);
+        let vz = (Math.random() - 0.5);
+        let vw = (Math.random() - 0.5);
+        const len = Math.hypot(vx, vy, vz, vw) || 1;
+        vx = (vx / len) * speed;
+        vy = (vy / len) * speed;
+        vz = (vz / len) * speed;
+        vw = (vw / len) * speed;
+
+        this.particles.push({
+          pos: [
+            (Math.random() - 0.5) * 2 * L,
+            (Math.random() - 0.5) * 2 * L,
+            (Math.random() - 0.5) * 2 * L,
+            (Math.random() - 0.5) * 2 * L
+          ],
+          vel: [vx, vy, vz, vw],
+          radius: 0.045,
+          mass: 1.0,
+          history: []
+        });
+      }
+
+      setCount(n) {
+        while (this.particles.length < n) this.spawnParticle();
+        if (this.particles.length > n) this.particles.length = n;
+      }
+
+      update(dt, audioHarmonics) {
+        const numP = this.particles.length;
+
+        // 1. Particle Physics & Forces
+        for (let i = 0; i < numP; i++) {
+          const p = this.particles[i];
+
+          // Store trail history
+          if (this.showTrails) {
+            p.history.push([...p.pos]);
+            if (p.history.length > 8) p.history.shift();
+          } else {
+            p.history = [];
+          }
+
+          // Apply Gravity Fields
+          if (this.gravityMode === 'w_grav') {
+            p.vel[3] -= 0.0006 * this.speedMult; // Falling along W
+          } else if (this.gravityMode === 'y_grav') {
+            p.vel[1] -= 0.0008 * this.speedMult; // 3D Gravity downwards
+          } else if (this.gravityMode === 'vortex') {
+            // 4D Center orbital vortex
+            const dist = Math.hypot(...p.pos) || 1;
+            const pull = 0.0004 / (dist + 0.1);
+            p.vel[0] -= p.pos[0] * pull;
+            p.vel[1] -= p.pos[1] * pull;
+            p.vel[2] -= p.pos[2] * pull;
+            p.vel[3] -= p.pos[3] * pull;
+          }
+
+          // Interactive 4D cursor force
+          if (this.interactiveForce) {
+            const fx = this.interactiveForce.x - p.pos[0];
+            const fy = this.interactiveForce.y - p.pos[1];
+            const fz = -p.pos[2];
+            const fw = this.interactiveForce.w - p.pos[3];
+            const fDist = Math.hypot(fx, fy, fz, fw) || 1;
+            if (fDist < 1.2) {
+              const str = 0.003 / fDist;
+              p.vel[0] += fx * str;
+              p.vel[1] += fy * str;
+              p.vel[2] += fz * str;
+              p.vel[3] += fw * str;
+            }
+          }
+
+          // Advance Position
+          p.pos[0] += p.vel[0];
+          p.pos[1] += p.vel[1];
+          p.pos[2] += p.vel[2];
+          p.pos[3] += p.vel[3];
+
+          // 2. Boundary Collisions
+          if (this.boundary === 'box') {
+            const L = this.boxL;
+            for (let d = 0; d < 4; d++) {
+              if (p.pos[d] > L - p.radius) {
+                p.pos[d] = L - p.radius;
+                p.vel[d] = -p.vel[d] * this.elasticity;
+                this.triggerRipple(p.pos, d);
+                if (d === 3 && audioHarmonics) audioHarmonics.playSliceChime(1.4);
+              } else if (p.pos[d] < -L + p.radius) {
+                p.pos[d] = -L + p.radius;
+                p.vel[d] = -p.vel[d] * this.elasticity;
+                this.triggerRipple(p.pos, d);
+                if (d === 3 && audioHarmonics) audioHarmonics.playSliceChime(1.6);
+              }
+            }
+          } else {
+            // Hypersphere Shell S³ Collision
+            const dist = Math.hypot(...p.pos);
+            const maxR = this.sphereR - p.radius;
+            if (dist > maxR) {
+              const nx = p.pos[0] / dist;
+              const ny = p.pos[1] / dist;
+              const nz = p.pos[2] / dist;
+              const nw = p.pos[3] / dist;
+
+              // Pull back inside shell
+              p.pos[0] = nx * maxR;
+              p.pos[1] = ny * maxR;
+              p.pos[2] = nz * maxR;
+              p.pos[3] = nw * maxR;
+
+              // Elastic normal reflection: v' = v - 2(v·n)n
+              const dot = p.vel[0]*nx + p.vel[1]*ny + p.vel[2]*nz + p.vel[3]*nw;
+              p.vel[0] = (p.vel[0] - 2 * dot * nx) * this.elasticity;
+              p.vel[1] = (p.vel[1] - 2 * dot * ny) * this.elasticity;
+              p.vel[2] = (p.vel[2] - 2 * dot * nz) * this.elasticity;
+              p.vel[3] = (p.vel[3] - 2 * dot * nw) * this.elasticity;
+
+              this.triggerRipple(p.pos, 3);
+              if (audioHarmonics) audioHarmonics.playSliceChime(1.5);
+            }
+          }
+        }
+
+        // 3. Elastic Particle-Particle 4D Collisions
+        if (this.collideParticles) {
+          for (let i = 0; i < numP; i++) {
+            const p1 = this.particles[i];
+            for (let j = i + 1; j < numP; j++) {
+              const p2 = this.particles[j];
+              const dx = p2.pos[0] - p1.pos[0];
+              const dy = p2.pos[1] - p1.pos[1];
+              const dz = p2.pos[2] - p1.pos[2];
+              const dw = p2.pos[3] - p1.pos[3];
+              const dist = Math.hypot(dx, dy, dz, dw);
+              const minDist = p1.radius + p2.radius;
+
+              if (dist < minDist && dist > 1e-5) {
+                // Normal vector
+                const nx = dx / dist;
+                const ny = dy / dist;
+                const nz = dz / dist;
+                const nw = dw / dist;
+
+                // Relative velocity
+                const kx = p1.vel[0] - p2.vel[0];
+                const ky = p1.vel[1] - p2.vel[1];
+                const kz = p1.vel[2] - p2.vel[2];
+                const kw = p1.vel[3] - p2.vel[3];
+                const p = 2 * (nx * kx + ny * ky + nz * kz + nw * kw) / 2.0;
+
+                p1.vel[0] -= p * nx * this.elasticity;
+                p1.vel[1] -= p * ny * this.elasticity;
+                p1.vel[2] -= p * nz * this.elasticity;
+                p1.vel[3] -= p * nw * this.elasticity;
+
+                p2.vel[0] += p * nx * this.elasticity;
+                p2.vel[1] += p * ny * this.elasticity;
+                p2.vel[2] += p * nz * this.elasticity;
+                p2.vel[3] += p * nw * this.elasticity;
+
+                // Push apart
+                const overlap = 0.5 * (minDist - dist);
+                p1.pos[0] -= nx * overlap;
+                p1.pos[1] -= ny * overlap;
+                p1.pos[2] -= nz * overlap;
+                p1.pos[3] -= nw * overlap;
+                p2.pos[0] += nx * overlap;
+                p2.pos[1] += ny * overlap;
+                p2.pos[2] += nz * overlap;
+                p2.pos[3] += nw * overlap;
+              }
+            }
+          }
+        }
+
+        // 4. Update Expanding 4D Collision Ripples
+        for (let i = this.ripples.length - 1; i >= 0; i--) {
+          const r = this.ripples[i];
+          r.radius += 0.05;
+          r.alpha -= 0.035;
+          if (r.alpha <= 0) this.ripples.splice(i, 1);
+        }
+      }
+
+      triggerRipple(pos, dim) {
+        if (this.ripples.length < 25) {
+          this.ripples.push({
+            pos: [...pos],
+            dim,
+            radius: 0.08,
+            alpha: 0.8
+          });
+        }
+      }
+    }
+
+
+    /* =============================================================
+       5. 4D CHROMATIC SPECTRUM & DEPTH COLOR ENGINE
+    ============================================================= */
+    const ChromaticEngine = {
+      // Maps 4D W coordinate to RGB color across customizable spectrums
+      getColor(w, themeKey = 'hyper_chroma', phase = 0) {
+        // Normalize w: roughly -1.8 to +1.8 -> 0.0 to 1.0
+        let t = (w + 1.8) / 3.6;
+        if (phase !== 0) {
+          t = (t + phase) % 1.0;
+          if (t < 0) t += 1.0;
+        }
+        t = Math.max(0, Math.min(1, t));
+
+        if (themeKey === 'hyper_chroma') {
+          // Full continuous rainbow spectrum HSL across W depth
+          const hue = Math.floor((280 - t * 320 + 360) % 360);
+          return `hsl(${hue}, 100%, 60%)`;
+        }
+
+        if (themeKey === 'solar') {
+          // Thermal blackbody radiation: Deep Crimson -> Amber -> Gold -> Solar White
+          let r, g, b;
+          if (t < 0.33) {
+            const f = t / 0.33;
+            r = Math.floor(180 + f * 75);
+            g = Math.floor(20 + f * 90);
+            b = Math.floor(10);
+          } else if (t < 0.66) {
+            const f = (t - 0.33) / 0.33;
+            r = 255;
+            g = Math.floor(110 + f * 110);
+            b = Math.floor(10 + f * 40);
+          } else {
+            const f = (t - 0.66) / 0.34;
+            r = 255;
+            g = Math.floor(220 + f * 35);
+            b = Math.floor(50 + f * 205);
+          }
+          return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        if (themeKey === 'abyss') {
+          // Cyberpunk matrix emerald to electric cyan
+          const r = Math.floor(6 + t * 24);
+          const g = Math.floor(180 + t * 65);
+          const b = Math.floor(120 + t * 135);
+          return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        if (themeKey === 'infrared') {
+          // Bioluminescence: Abyss Violet -> Hot Pink -> Coral Rose
+          const r = Math.floor(120 + t * 135);
+          const g = Math.floor(30 + t * 80);
+          const b = Math.floor(240 - t * 90);
+          return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        if (themeKey === 'platinum') {
+          // Architectural monochrome platinum
+          const val = Math.floor(130 + t * 125);
+          return `rgb(${val}, ${val}, ${Math.min(255, val + 15)})`;
+        }
+
+        // Default: Quantum Neon (Cyan <-> Magenta <-> Violet)
+        let r, g, b;
+        if (t < 0.5) {
+          const f = t / 0.5;
+          r = Math.floor(0 + f * 168);
+          g = Math.floor(240 - f * 155);
+          b = Math.floor(255 - f * 8);
+        } else {
+          const f = (t - 0.5) / 0.5;
+          r = Math.floor(168 + f * 76);
+          g = Math.floor(85 - f * 22);
+          b = Math.floor(247 - f * 153);
+        }
+        return `rgb(${r}, ${g}, ${b})`;
+      }
+    };
+
+
+    /* =============================================================
+       6. PSEUDO-VOLUMETRIC HYPER-RAYMARCHING & GLOW ENGINE
+    ============================================================= */
+    const VolumetricEngine = {
+      lightOrbitAngle: 0,
+
+      // Initialize 60 ambient cosmic hyper-dust motes
+      createDustMotes(count = 60) {
+        const motes = [];
+        for (let i = 0; i < count; i++) {
+          motes.push({
+            pos: [
+              (Math.random() - 0.5) * 3.6,
+              (Math.random() - 0.5) * 3.6,
+              (Math.random() - 0.5) * 3.6,
+              (Math.random() - 0.5) * 3.6
+            ],
+            vel: [
+              (Math.random() - 0.5) * 0.003,
+              (Math.random() - 0.5) * 0.003,
+              (Math.random() - 0.5) * 0.003,
+              (Math.random() - 0.5) * 0.003
+            ],
+            size: 1.0 + Math.random() * 2.0,
+            sparklePhase: Math.random() * Math.PI * 2
+          });
+        }
+        return motes;
+      },
+
+      // Update dust motes positions
+      updateMotes(motes) {
+        for (const m of motes) {
+          m.pos[0] += m.vel[0];
+          m.pos[1] += m.vel[1];
+          m.pos[2] += m.vel[2];
+          m.pos[3] += m.vel[3];
+          m.sparklePhase += 0.04;
+
+          // Wrap around in 4D box
+          for (let d = 0; d < 4; d++) {
+            if (m.pos[d] > 2.2) m.pos[d] = -2.2;
+            if (m.pos[d] < -2.2) m.pos[d] = 2.2;
+          }
+        }
+      },
+
+      // Get 4D Light position vector
+      getLightPos(speed = 1.0) {
+        this.lightOrbitAngle += 0.015 * speed;
+        return [
+          2.2 * Math.cos(this.lightOrbitAngle),
+          2.5,
+          2.2 * Math.sin(this.lightOrbitAngle),
+          1.8 * Math.cos(this.lightOrbitAngle * 0.7)
+        ];
+      },
+
+      // Compute 4D Phong Illumination factor (diffuse + specular)
+      computeLighting(v4, normal3D, light4D) {
+        // Light direction in 3D projection approximation
+        const lx = light4D[0] - v4[0];
+        const ly = light4D[1] - v4[1];
+        const lz = light4D[2] - v4[2];
+        const len = Math.hypot(lx, ly, lz) || 1;
+        const lDir = [lx/len, ly/len, lz/len];
+
+        const dot = Math.max(0, normal3D[0]*lDir[0] + normal3D[1]*lDir[1] + normal3D[2]*lDir[2]);
+        const specular = Math.pow(dot, 16) * 0.45;
+        return 0.35 + dot * 0.55 + specular;
+      }
+    };
+
+
+    /* =============================================================
+       7. PURE JAVASCRIPT GIF89a OFFLINE ENCODER
+    ============================================================= */
+    class SimpleGifEncoder {
+      constructor(width, height, delay = 5) {
+        this.width = width;
+        this.height = height;
+        this.delay = delay; // in 1/100 sec (5 = 50ms = 20 fps)
+        this.frames = [];
+      }
+
+      addFrame(ctx) {
+        const imgData = ctx.getImageData(0, 0, this.width, this.height);
+        this.frames.push(imgData);
+      }
+
+      buildPalette() {
+        const pal = [];
+        for (let r = 0; r < 8; r++) {
+          for (let g = 0; g < 8; g++) {
+            for (let b = 0; b < 4; b++) {
+              pal.push([
+                Math.round(r * 255 / 7),
+                Math.round(g * 255 / 7),
+                Math.round(b * 255 / 3)
+              ]);
+            }
+          }
+        }
+        return pal;
+      }
+
+      getColorIndex(r, g, b) {
+        const rIdx = Math.round(r * 7 / 255);
+        const gIdx = Math.round(g * 7 / 255);
+        const bIdx = Math.round(b * 3 / 255);
+        return (rIdx << 5) | (gIdx << 2) | bIdx;
+      }
+
+      lzw(pixels, minCodeSize) {
+        const clearCode = 1 << minCodeSize;
+        const eoiCode = clearCode + 1;
+        let codeSize = minCodeSize + 1;
+        let nextCode = eoiCode + 1;
+
+        const out = [];
+        let curBits = 0;
+        let curVal = 0;
+
+        const writeCode = (code) => {
+          curVal |= code << curBits;
+          curBits += codeSize;
+          while (curBits >= 8) {
+            out.push(curVal & 0xFF);
+            curVal >>= 8;
+            curBits -= 8;
+          }
+        };
+
+        writeCode(clearCode);
+        const dict = new Map();
+        let prefix = null;
+
+        for (let i = 0; i < pixels.length; i++) {
+          const k = pixels[i];
+          if (prefix === null) {
+            prefix = k;
+            continue;
+          }
+          const key = (prefix << 8) | k;
+          if (dict.has(key)) {
+            prefix = dict.get(key);
+          } else {
+            writeCode(prefix);
+            if (nextCode < 4096) {
+              dict.set(key, nextCode++);
+              if (nextCode > (1 << codeSize) && codeSize < 12) {
+                codeSize++;
+              }
+            } else {
+              writeCode(clearCode);
+              dict.clear();
+              codeSize = minCodeSize + 1;
+              nextCode = eoiCode + 1;
+            }
+            prefix = k;
+          }
+        }
+        if (prefix !== null) writeCode(prefix);
+        writeCode(eoiCode);
+        if (curBits > 0) out.push(curVal & 0xFF);
+        return out;
+      }
+
+      render() {
+        const palette = this.buildPalette();
+        const bytes = [];
+
+        // Header GIF89a
+        const header = 'GIF89a';
+        for (let i = 0; i < header.length; i++) bytes.push(header.charCodeAt(i));
+
+        // Logical Screen Descriptor
+        bytes.push(this.width & 0xFF, (this.width >> 8) & 0xFF);
+        bytes.push(this.height & 0xFF, (this.height >> 8) & 0xFF);
+        bytes.push(0xF7); // Global color table, 8 bits/pixel, 256 colors
+        bytes.push(0);    // Background color
+        bytes.push(0);    // Aspect ratio
+
+        // Global Color Table
+        for (let c of palette) bytes.push(c[0], c[1], c[2]);
+
+        // Netscape Loop Extension
+        bytes.push(0x21, 0xFF, 0x0B);
+        const appStr = 'NETSCAPE2.0';
+        for (let i = 0; i < appStr.length; i++) bytes.push(appStr.charCodeAt(i));
+        bytes.push(0x03, 0x01, 0x00, 0x00, 0x00);
+
+        // Frames
+        for (const frame of this.frames) {
+          bytes.push(0x21, 0xF9, 0x04);
+          bytes.push(0x00);
+          bytes.push(this.delay & 0xFF, (this.delay >> 8) & 0xFF);
+          bytes.push(0);
+          bytes.push(0);
+
+          bytes.push(0x2C);
+          bytes.push(0, 0, 0, 0);
+          bytes.push(this.width & 0xFF, (this.width >> 8) & 0xFF);
+          bytes.push(this.height & 0xFF, (this.height >> 8) & 0xFF);
+          bytes.push(0x00);
+
+          const pixels = new Uint8Array(this.width * this.height);
+          const data = frame.data;
+          for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+            pixels[p] = this.getColorIndex(data[i], data[i+1], data[i+2]);
+          }
+
+          const lzwData = this.lzw(pixels, 8);
+          bytes.push(8);
+
+          for (let idx = 0; idx < lzwData.length; idx += 255) {
+            const chunk = lzwData.slice(idx, idx + 255);
+            bytes.push(chunk.length);
+            for (let b of chunk) bytes.push(b);
+          }
+          bytes.push(0);
+        }
+
+        // Trailer
+        bytes.push(0x3B);
+        return new Uint8Array(bytes);
+      }
+    }
+
+
+    /* =============================================================
+       8. ANIMATION SEQUENCE RECORDER ENGINE (WEBM & GIF)
+    ============================================================= */
+    const AnimationRecorder = {
+      isRecording: false,
+      mediaRecorder: null,
+      recordedChunks: [],
+      gifEncoder: null,
+      recordedFramesCount: 0,
+      totalTargetFrames: 180,
+      targetDurationSec: 5,
+      startTime: 0,
+      format: 'webm',
+      downloadBlob: null,
+      downloadFilename: '',
+
+      startRecording(format, target, duration, resolution, canvas) {
+        this.format = format;
+        this.isRecording = true;
+        this.recordedChunks = [];
+        this.recordedFramesCount = 0;
+        this.startTime = performance.now();
+
+        // Calculate exact frames for 360 loop
+        const fps = format === 'gif' ? 24 : 60;
+        let durationSec = parseFloat(duration);
+        if (isNaN(durationSec)) durationSec = 5.0; // 5s loop default
+        this.targetDurationSec = durationSec;
+        this.totalTargetFrames = Math.round(durationSec * fps);
+
+        // Update UI
+        document.getElementById('hud-rec-indicator').style.display = 'flex';
+        document.getElementById('btn-record').classList.add('recording-active');
+        document.getElementById('rec-progress-box').style.display = 'flex';
+        document.getElementById('btn-rec-start').style.display = 'none';
+        document.getElementById('btn-rec-stop').style.display = 'inline-flex';
+        document.getElementById('rec-result-section').style.display = 'none';
+
+        if (format === 'webm') {
+          try {
+            const stream = canvas.captureStream(60);
+            let mimeType = 'video/webm;codecs=vp9';
+            if (!MediaRecorder.isTypeSupported(mimeType)) {
+              mimeType = 'video/webm;codecs=vp8';
+              if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
+            }
+            this.mediaRecorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 6000000 });
+            this.mediaRecorder.ondataavailable = (e) => {
+              if (e.data && e.data.size > 0) this.recordedChunks.push(e.data);
+            };
+            this.mediaRecorder.onstop = () => {
+              this.finalizeWebM(mimeType);
+            };
+            this.mediaRecorder.start();
+          } catch (err) {
+            console.warn('MediaRecorder error, falling back to GIF', err);
+            this.format = 'gif';
+          }
+        }
+
+        if (this.format === 'gif') {
+          // Offscreen downscaled canvas for smooth fast GIF encoding
+          const gw = 480;
+          const gh = Math.round(480 * (canvas.height / canvas.width));
+          this.gifEncoder = new SimpleGifEncoder(gw, gh, Math.round(100 / fps));
+        }
+      },
+
+      captureFrameHook(canvas) {
+        if (!this.isRecording) return;
+
+        this.recordedFramesCount++;
+        const elapsed = (performance.now() - this.startTime) / 1000;
+        const progress = Math.min(1.0, this.recordedFramesCount / this.totalTargetFrames);
+
+        // Update UI
+        document.getElementById('hud-rec-time').textContent = elapsed.toFixed(1) + 's';
+        document.getElementById('rec-bar-fill').style.width = Math.round(progress * 100) + '%';
+        document.getElementById('rec-frame-count').textContent = `Frame ${this.recordedFramesCount} / ${this.totalTargetFrames}`;
+
+        // Feed frame to GIF encoder
+        if (this.format === 'gif' && this.gifEncoder) {
+          const offCanvas = document.createElement('canvas');
+          offCanvas.width = this.gifEncoder.width;
+          offCanvas.height = this.gifEncoder.height;
+          const offCtx = offCanvas.getContext('2d');
+          offCtx.drawImage(canvas, 0, 0, offCanvas.width, offCanvas.height);
+          this.gifEncoder.addFrame(offCtx);
+        }
+
+        // Auto complete when target frames reached
+        if (this.recordedFramesCount >= this.totalTargetFrames) {
+          this.stopRecording();
+        }
+      },
+
+      stopRecording() {
+        if (!this.isRecording) return;
+        this.isRecording = false;
+
+        document.getElementById('hud-rec-indicator').style.display = 'none';
+        document.getElementById('btn-record').classList.remove('recording-active');
+        document.getElementById('btn-rec-stop').style.display = 'none';
+
+        if (this.format === 'webm' && this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+          this.mediaRecorder.stop();
+        } else if (this.format === 'gif') {
+          this.finalizeGIF();
+        }
+      },
+
+      finalizeWebM(mimeType) {
+        const blob = new Blob(this.recordedChunks, { type: mimeType });
+        this.downloadBlob = blob;
+        this.downloadFilename = `ChronoForge4D-Loop-${Date.now()}.webm`;
+        const url = URL.createObjectURL(blob);
+
+        const container = document.getElementById('rec-media-container');
+        container.innerHTML = `<video src="${url}" controls autoplay loop></video>`;
+        document.getElementById('rec-result-section').style.display = 'flex';
+        document.getElementById('btn-rec-download').style.display = 'inline-flex';
+        document.getElementById('rec-progress-box').style.display = 'none';
+      },
+
+      finalizeGIF() {
+        document.getElementById('rec-progress-text').textContent = 'Compacting LZW GIF Blocks...';
+        setTimeout(() => {
+          const bytes = this.gifEncoder.render();
+          const blob = new Blob([bytes], { type: 'image/gif' });
+          this.downloadBlob = blob;
+          this.downloadFilename = `ChronoForge4D-Loop-${Date.now()}.gif`;
+          const url = URL.createObjectURL(blob);
+
+          const container = document.getElementById('rec-media-container');
+          container.innerHTML = `<img src="${url}" alt="Recorded GIF Loop">`;
+          document.getElementById('rec-result-section').style.display = 'flex';
+          document.getElementById('btn-rec-download').style.display = 'inline-flex';
+          document.getElementById('rec-progress-box').style.display = 'none';
+        }, 50);
+      },
+
+      triggerDownload() {
+        if (!this.downloadBlob) return;
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(this.downloadBlob);
+        link.download = this.downloadFilename;
+        link.click();
+      }
+    };
+
+
+    /* =============================================================
+       9. 3D HYPERPLANE SLICING ALGORITHM (W = w_slice)
+    ============================================================= */
+    const HyperplaneSlicer = {
+      computeSlice(transformedVertices, edges, faces, wSlice) {
+        const cutPoints = [];
+        const edgeToCutIdx = new Map();
+
+        // 1. Intersect all 4D edges with hyperplane W = wSlice
+        for (let eIdx = 0; eIdx < edges.length; eIdx++) {
+          const [i1, i2] = edges[eIdx];
+          const v1 = transformedVertices[i1];
+          const v2 = transformedVertices[i2];
+          if (!v1 || !v2) continue;
+          const w1 = v1[3];
+          const w2 = v2[3];
+
+          if ((w1 - wSlice) * (w2 - wSlice) <= 0 && Math.abs(w1 - w2) > 1e-6) {
+            const t = (wSlice - w1) / (w2 - w1);
+            const pt3D = [
+              v1[0] + t * (v2[0] - v1[0]),
+              v1[1] + t * (v2[1] - v1[1]),
+              v1[2] + t * (v2[2] - v1[2])
+            ];
+            const cutIdx = cutPoints.length;
+            cutPoints.push(pt3D);
+            edgeToCutIdx.set(eIdx, cutIdx);
+          }
+        }
+
+        // 2. Intersect 2D faces to form 3D cross-section line segments
+        const cutSegments = [];
+        if (faces && faces.length > 0) {
+          for (const face of faces) {
+            const cutIndicesOnFace = [];
+            const len = face.length;
+            for (let i = 0; i < len; i++) {
+              const pA = face[i];
+              const pB = face[(i + 1) % len];
+              for (let eIdx = 0; eIdx < edges.length; eIdx++) {
+                const [ea, eb] = edges[eIdx];
+                if ((ea === pA && eb === pB) || (ea === pB && eb === pA)) {
+                  if (edgeToCutIdx.has(eIdx)) {
+                    cutIndicesOnFace.push(edgeToCutIdx.get(eIdx));
+                  }
+                  break;
+                }
+              }
+            }
+            if (cutIndicesOnFace.length === 2) {
+              cutSegments.push([cutIndicesOnFace[0], cutIndicesOnFace[1]]);
+            }
+          }
+        } else {
+          // Bounding hull segments if no explicit face definitions
+          for (let i = 0; i < cutPoints.length; i++) {
+            for (let j = i + 1; j < cutPoints.length; j++) {
+              const d2 = Math.hypot(
+                cutPoints[i][0] - cutPoints[j][0],
+                cutPoints[i][1] - cutPoints[j][1],
+                cutPoints[i][2] - cutPoints[j][2]
+              );
+              if (d2 < 0.95) {
+                cutSegments.push([i, j]);
+              }
+            }
+          }
+        }
+
+        return {
+          vertices: cutPoints,
+          segments: cutSegments
+        };
+      }
+    };
+
+
+    /* =============================================================
+       10. WEB AUDIO SYNTHESIZER: 4D HARMONIC SONIFICATION ENGINE
+    ============================================================= */
+    class AudioHarmonicsEngine {
+      constructor() {
+        this.ctx = null;
+        this.isMuted = true;
+        this.oscillators = [];
+        this.gains = [];
+        this.masterGain = null;
+        this.filter = null;
+        this.frequencies = [65.41, 97.99, 130.81, 164.81, 196.00, 246.94];
+      }
+
+      init() {
+        if (this.ctx) return;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        this.ctx = new AudioContext();
+
+        this.filter = this.ctx.createBiquadFilter();
+        this.filter.type = 'lowpass';
+        this.filter.frequency.setValueAtTime(600, this.ctx.currentTime);
+        this.filter.Q.setValueAtTime(3.0, this.ctx.currentTime);
+
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+
+        this.filter.connect(this.masterGain);
+        this.masterGain.connect(this.ctx.destination);
+
+        for (let i = 0; i < 6; i++) {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(this.frequencies[i], this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+
+          osc.connect(gain);
+          gain.connect(this.filter);
+          osc.start();
+
+          this.oscillators.push(osc);
+          this.gains.push(gain);
+        }
+      }
+
+      toggleAudio() {
+        if (!this.ctx) this.init();
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+
+        this.isMuted = !this.isMuted;
+        const targetVol = this.isMuted ? 0.0001 : 0.22;
+        this.masterGain.gain.setTargetAtTime(targetVol, this.ctx.currentTime, 0.08);
+        return !this.isMuted;
+      }
+
+      updateKineticHarmonics(planeVelocities) {
+        if (!this.ctx || this.isMuted) return;
+
+        let totalSpeed = 0;
+        for (let i = 0; i < 6; i++) {
+          const speed = Math.abs(planeVelocities[i]);
+          totalSpeed += speed;
+          const voiceVol = Math.min(0.28, speed * 7.5);
+          this.gains[i].gain.setTargetAtTime(voiceVol, this.ctx.currentTime, 0.05);
+
+          const baseFreq = this.frequencies[i];
+          const microDetune = speed * 120;
+          this.oscillators[i].frequency.setTargetAtTime(baseFreq + microDetune, this.ctx.currentTime, 0.05);
+        }
+
+        const targetCutoff = 400 + Math.min(2400, totalSpeed * 35000);
+        this.filter.frequency.setTargetAtTime(targetCutoff, this.ctx.currentTime, 0.1);
+      }
+
+      playSliceChime(pitchShift = 1.0) {
+        if (!this.ctx || this.isMuted) return;
+        const chimeOsc = this.ctx.createOscillator();
+        const chimeGain = this.ctx.createGain();
+
+        chimeOsc.type = 'sine';
+        const notes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
+        const freq = notes[Math.floor(Math.random() * notes.length)] * pitchShift;
+        chimeOsc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+        chimeGain.gain.setValueAtTime(0.045, this.ctx.currentTime);
+        chimeGain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.35);
+
+        chimeOsc.connect(chimeGain);
+        chimeGain.connect(this.masterGain);
+
+        chimeOsc.start();
+        chimeOsc.stop(this.ctx.currentTime + 0.36);
+      }
+    }
+
+
+    /* =============================================================
+       11. APPLICATION STATE & THEME MANAGEMENT
+    ============================================================= */
+    const State = {
+      currentPolyKey: 'tesseract',
+      poly: null,
+      scale: 1.4,
+
+      // Dalí Net Unfolding
+      unfoldAmount: 0.0,
+      isUnfoldAnimating: false,
+      unfoldAnimSpeed: 0.015,
+      unfoldAnimDir: 1,
+
+      // 4D Rotation matrix (SO(4))
+      rotMatrix: Math4D.createIdentity(),
+      velocities: [0.008, 0.005, 0.000, 0.012, 0.006, 0.003],
+      isPrecessionActive: true,
+
+      // Drag mode: 'camera' | 'hyper' | 'slice' | 'particle'
+      dragMode: 'camera',
+
+      // Camera Orbit
+      camYaw: 0.35,
+      camPitch: 0.25,
+      camDist: 3.8,
+
+      // Projection Optics
+      d4: 2.5,
+      d3: 3.8,
+      projMode: 'perspective',
+
+      // Slicing Chamber
+      sliceW: 0.0,
+      autoScan: false,
+      scanSpeed: 0.01,
+      renderSolidSlice: true,
+
+      // 4D Chromatic Depth
+      colorTheme: 'hyper_chroma',
+      gradientEdges: true,
+      chromaCycle: false,
+      chromaPhase: 0.0,
+      chromaSpeed: 1.0,
+
+      // Aesthetics & Shading
+      trailLength: 15,
+      trails: [],
+      depthGlow: true,
+      cellFaces: true,
+      shadowFloor: true,
+      selectedCell: -1,
+
+      // 4D Bouncing Particle Chamber
+      particleChamber: new ParticleChamber4D(45),
+      particleActive: false,
+
+      // Volumetrics & Lighting
+      hyperFog: true,
+      fogDensity: 0.55,
+      light4DActive: true,
+      lightOrbitSpeed: 1.0,
+      bloomGlow: true,
+      bloomIntensity: 1.4,
+      dustMotes: VolumetricEngine.createDustMotes(60),
+      showDustMotes: true,
+
+      // Gyroscope
+      gyroEnabled: false
+    };
+
+    const ColorThemes = {
+      hyper_chroma: { bg: '#07090e', glowRgba: '0, 240, 255' },
+      quantum: { bg: '#07090e', glowRgba: '0, 240, 255' },
+      solar: { bg: '#0a0805', glowRgba: '245, 158, 11' },
+      abyss: { bg: '#030a08', glowRgba: '16, 185, 129' },
+      infrared: { bg: '#0b0406', glowRgba: '244, 63, 94' },
+      platinum: { bg: '#08080a', glowRgba: '203, 213, 225' }
+    };
+
+
+    /* =============================================================
+       12. MAIN CANVASES & RESIZING
+    ============================================================= */
+    const mainCanvas = document.getElementById('main-canvas');
+    const mainCtx = mainCanvas.getContext('2d', { alpha: false });
+    const sliceCanvas = document.getElementById('slice-canvas');
+    const sliceCtx = sliceCanvas.getContext('2d');
+
+    const audio = new AudioHarmonicsEngine();
+
+    function resizeCanvases() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+
+      const rect = mainCanvas.parentElement.getBoundingClientRect();
+      mainCanvas.width = Math.floor(rect.width * dpr);
+      mainCanvas.height = Math.floor(rect.height * dpr);
+      mainCtx.scale(dpr, dpr);
+
+      const sRect = sliceCanvas.parentElement.getBoundingClientRect();
+      sliceCanvas.width = Math.floor(sRect.width * dpr);
+      sliceCanvas.height = Math.floor(sRect.height * dpr);
+      sliceCtx.scale(dpr, dpr);
+    }
+
+    window.addEventListener('resize', resizeCanvases);
+
+
+    /* =============================================================
+       13. PROJECTION PIPELINE (4D -> 3D -> 2D)
+    ============================================================= */
+    function project4Dto3D(v4) {
+      const [x, y, z, w] = v4;
+
+      if (State.projMode === 'orthographic') {
+        return [x, y, z, w];
+      }
+
+      if (State.projMode === 'stereographic') {
+        const R = 2.0;
+        const denom = Math.max(0.08, R - w);
+        const k = (2.0 * R) / denom;
+        return [x * k * 0.45, y * k * 0.45, z * k * 0.45, w];
+      }
+
+      if (State.projMode === 'shadow') {
+        const lightW = 3.0;
+        const k = lightW / Math.max(0.1, lightW - w);
+        return [x * k, y * k, z * k, w];
+      }
+
+      // Default: Perspective 4D -> 3D
+      const d4 = State.d4;
+      const k4 = d4 / Math.max(0.15, d4 - w);
+      return [x * k4, y * k4, z * k4, w];
+    }
+
+    function project3Dto2D(pt3D, width, height, customZoom = 1.0) {
+      const [x, y, z, w] = pt3D;
+
+      const cosY = Math.cos(State.camYaw), sinY = Math.sin(State.camYaw);
+      const x1 = x * cosY - z * sinY;
+      const z1 = x * sinY + z * cosY;
+
+      const cosP = Math.cos(State.camPitch), sinP = Math.sin(State.camPitch);
+      const y2 = y * cosP - z1 * sinP;
+      const z2 = y * sinP + z1 * cosP;
+
+      const d3 = State.d3;
+      const fov = (Math.min(width, height) * 0.48) * State.scale * customZoom;
+      const k3 = d3 / Math.max(0.1, d3 + z2);
+
+      const screenX = width / 2 + x1 * k3 * fov;
+      const screenY = height / 2 - y2 * k3 * fov;
+
+      return {
+        screenX,
+        screenY,
+        depthZ: z2,
+        coordW: w,
+        valid: (d3 + z2 > 0.05)
+      };
+    }
+
+
+    /* =============================================================
+       14. MAIN RENDER LOOP: 4D VIEWPORT
+    ============================================================= */
+    let lastTime = performance.now();
+    let frameCounter = 0;
+    let lastFpsUpdate = performance.now();
+
+    function renderMainScene(now) {
+      const dt = Math.min(0.05, (now - lastTime) / 1000);
+      lastTime = now;
+
+      // FPS Calculation
+      frameCounter++;
+      if (now - lastFpsUpdate > 500) {
+        const fps = Math.round((frameCounter * 1000) / (now - lastFpsUpdate));
+        document.getElementById('hud-fps').textContent = fps;
+        frameCounter = 0;
+        lastFpsUpdate = now;
+      }
+
+      // 1. Advance 4D Rotational Kinematics (SO(4) Matrix Multiplication)
+      if (State.isPrecessionActive) {
+        const v = State.velocities;
+        if (v[0] !== 0) State.rotMatrix = Math4D.multiplyMatrix(Math4D.rotXY(v[0]), State.rotMatrix);
+        if (v[1] !== 0) State.rotMatrix = Math4D.multiplyMatrix(Math4D.rotXZ(v[1]), State.rotMatrix);
+        if (v[2] !== 0) State.rotMatrix = Math4D.multiplyMatrix(Math4D.rotYZ(v[2]), State.rotMatrix);
+        if (v[3] !== 0) State.rotMatrix = Math4D.multiplyMatrix(Math4D.rotXW(v[3]), State.rotMatrix);
+        if (v[4] !== 0) State.rotMatrix = Math4D.multiplyMatrix(Math4D.rotYW(v[4]), State.rotMatrix);
+        if (v[5] !== 0) State.rotMatrix = Math4D.multiplyMatrix(Math4D.rotZW(v[5]), State.rotMatrix);
+
+        if (Math.random() < 0.05) {
+          State.rotMatrix = Math4D.orthonormalize(State.rotMatrix);
+        }
+
+        audio.updateKineticHarmonics(State.velocities);
+      }
+
+      // 2. Advance Dalí Net Auto-Animation (if active)
+      if (State.isUnfoldAnimating && State.poly.supportUnfold) {
+        State.unfoldAmount += State.unfoldAnimSpeed * State.unfoldAnimDir;
+        if (State.unfoldAmount >= 1.0) {
+          State.unfoldAmount = 1.0;
+          State.unfoldAnimDir = -1;
+        } else if (State.unfoldAmount <= 0.0) {
+          State.unfoldAmount = 0.0;
+          State.unfoldAnimDir = 1;
+        }
+        document.getElementById('slider-unfold').value = State.unfoldAmount.toFixed(2);
+        document.getElementById('val-unfold').textContent = Math.round(State.unfoldAmount * 100) + '%';
+      }
+
+      // 3. Advance Chromatic Cycle Phase
+      if (State.chromaCycle) {
+        State.chromaPhase = (State.chromaPhase + 0.005 * State.chromaSpeed) % 1.0;
+      }
+
+      // 4. Advance Volumetric 4D Light & Dust Motes
+      const light4D = VolumetricEngine.getLightPos(State.lightOrbitSpeed);
+      if (State.showDustMotes) {
+        VolumetricEngine.updateMotes(State.dustMotes);
+      }
+
+      // 5. Advance 4D Bouncing Particle Chamber
+      if (State.particleActive) {
+        State.particleChamber.update(dt, audio);
+      }
+
+      // 6. Auto Scan W-Slice Plane
+      if (State.autoScan) {
+        State.sliceW += State.scanSpeed;
+        if (State.sliceW > 1.5 || State.sliceW < -1.5) {
+          State.scanSpeed = -State.scanSpeed;
+          audio.playSliceChime(1.2);
+        }
+        document.getElementById('slider-slice-w').value = State.sliceW.toFixed(2);
+        document.getElementById('val-slice-w').textContent = State.sliceW.toFixed(2);
+        document.getElementById('hud-slice-w').textContent = `W = ${State.sliceW.toFixed(2)}`;
+        document.getElementById('slice-active-badge').textContent = `W = ${State.sliceW.toFixed(2)}`;
+      }
+
+      // 7. Transform 4D vertices by current SO(4) Matrix
+      const rawVerts = State.poly.vertices;
+      const transformedVerts = rawVerts.map(v => Math4D.transformVector(State.rotMatrix, v));
+
+      // Manage Vertex Trails
+      if (State.trailLength > 0) {
+        State.trails.push(transformedVerts.map(v => [...v]));
+        if (State.trails.length > State.trailLength) {
+          State.trails.shift();
+        }
+      } else {
+        State.trails = [];
+      }
+
+      // 8. Project 4D -> 3D -> 2D
+      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      const w = mainCanvas.width / dpr;
+      const h = mainCanvas.height / dpr;
+
+      const projected3D = transformedVerts.map(v => project4Dto3D(v));
+      const projected2D = projected3D.map(p => project3Dto2D(p, w, h));
+
+      // 9. Canvas Clear & Deep Void Background
+      const theme = ColorThemes[State.colorTheme] || ColorThemes.hyper_chroma;
+      mainCtx.fillStyle = theme.bg;
+      mainCtx.fillRect(0, 0, w, h);
+
+      // Atmospheric Fog Radial Background
+      if (State.hyperFog) {
+        mainCtx.save();
+        const radGrad = mainCtx.createRadialGradient(w/2, h/2, 20, w/2, h/2, Math.max(w, h)*0.65);
+        radGrad.addColorStop(0, 'rgba(14, 20, 36, 0.45)');
+        radGrad.addColorStop(1, 'rgba(7, 9, 14, 0.95)');
+        mainCtx.fillStyle = radGrad;
+        mainCtx.fillRect(0, 0, w, h);
+        mainCtx.restore();
+      }
+
+      // Subtle Cyber Grid
+      mainCtx.save();
+      mainCtx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+      mainCtx.lineWidth = 1;
+      const step = 40;
+      for (let x = 0; x < w; x += step) {
+        mainCtx.beginPath(); mainCtx.moveTo(x, 0); mainCtx.lineTo(x, h); mainCtx.stroke();
+      }
+      for (let y = 0; y < h; y += step) {
+        mainCtx.beginPath(); mainCtx.moveTo(0, y); mainCtx.lineTo(w, y); mainCtx.stroke();
+      }
+      mainCtx.restore();
+
+      // 10. Cosmic Hyper-Dust Motes (Volumetric Raymarching Depth)
+      if (State.showDustMotes) {
+        mainCtx.save();
+        for (const mote of State.dustMotes) {
+          const mRot = Math4D.transformVector(State.rotMatrix, mote.pos);
+          const mProj3 = project4Dto3D(mRot);
+          const mProj2 = project3Dto2D(mProj3, w, h);
+          if (!mProj2.valid) continue;
+
+          const sparkle = (Math.sin(mote.sparklePhase) + 1) * 0.5;
+          const dist4D = Math.hypot(...mRot);
+          const fogAtten = State.hyperFog ? Math.exp(-State.fogDensity * dist4D * 0.4) : 1.0;
+          const alpha = 0.25 * sparkle * fogAtten;
+
+          mainCtx.beginPath();
+          mainCtx.arc(mProj2.screenX, mProj2.screenY, mote.size * 0.8, 0, Math.PI * 2);
+          mainCtx.fillStyle = `rgba(0, 240, 255, ${alpha})`;
+          mainCtx.fill();
+        }
+        mainCtx.restore();
+      }
+
+      // 11. 4D Floor Shadow
+      if (State.shadowFloor) {
+        mainCtx.save();
+        mainCtx.strokeStyle = 'rgba(0, 0, 0, 0.45)';
+        mainCtx.lineWidth = 1.2;
+        const floorY = h * 0.88;
+
+        for (const [i1, i2] of State.poly.edges) {
+          const p1 = projected2D[i1];
+          const p2 = projected2D[i2];
+          if (!p1 || !p2 || !p1.valid || !p2.valid) continue;
+
+          const s1x = p1.screenX;
+          const s1y = floorY + (p1.screenY - h/2) * 0.2;
+          const s2x = p2.screenX;
+          const s2y = floorY + (p2.screenY - h/2) * 0.2;
+
+          mainCtx.beginPath();
+          mainCtx.moveTo(s1x, s1y);
+          mainCtx.lineTo(s2x, s2y);
+          mainCtx.stroke();
+        }
+        mainCtx.restore();
+      }
+
+      // 12. Vertex Trails (Hyper-Ribbons)
+      if (State.trails.length > 1) {
+        mainCtx.save();
+        for (let vIdx = 0; vIdx < transformedVerts.length; vIdx += (transformedVerts.length > 100 ? 3 : 1)) {
+          mainCtx.beginPath();
+          let started = false;
+          for (let t = 0; t < State.trails.length; t++) {
+            const v4 = State.trails[t][vIdx];
+            if (!v4) continue;
+            const p3 = project4Dto3D(v4);
+            const p2 = project3Dto2D(p3, w, h);
+            if (!p2.valid) continue;
+            if (!started) {
+              mainCtx.moveTo(p2.screenX, p2.screenY);
+              started = true;
+            } else {
+              mainCtx.lineTo(p2.screenX, p2.screenY);
+            }
+          }
+          const alpha = 0.22 * (1.0 / (vIdx % 3 + 1));
+          mainCtx.strokeStyle = `rgba(${theme.glowRgba}, ${alpha})`;
+          mainCtx.lineWidth = 1.0;
+          mainCtx.stroke();
+        }
+        mainCtx.restore();
+      }
+
+      // 13. Salvador Dalí Hyper-Cross Unfolding Net Render
+      if (State.poly.supportUnfold && State.unfoldAmount > 0.001) {
+        mainCtx.save();
+        const daliNet = NetUnfolder.getDaliNet(State.unfoldAmount);
+
+        for (const cube of daliNet.cubes) {
+          // Transform cube vertices by current SO(4) rotation
+          const tVerts = cube.vertices.map(v => Math4D.transformVector(State.rotMatrix, v));
+          const p3D = tVerts.map(v => project4Dto3D(v));
+          const p2D = p3D.map(p => project3Dto2D(p, w, h));
+
+          // Render semi-transparent cube faces
+          for (const face of daliNet.cubeFaces) {
+            if (!p2D[face[0]].valid || !p2D[face[1]].valid || !p2D[face[2]].valid || !p2D[face[3]].valid) continue;
+            mainCtx.beginPath();
+            mainCtx.moveTo(p2D[face[0]].screenX, p2D[face[0]].screenY);
+            mainCtx.lineTo(p2D[face[1]].screenX, p2D[face[1]].screenY);
+            mainCtx.lineTo(p2D[face[2]].screenX, p2D[face[2]].screenY);
+            mainCtx.lineTo(p2D[face[3]].screenX, p2D[face[3]].screenY);
+            mainCtx.closePath();
+            mainCtx.fillStyle = cube.color + '1a'; // 10% opacity glass
+            mainCtx.fill();
+          }
+
+          // Render cube edges
+          mainCtx.strokeStyle = cube.color;
+          mainCtx.lineWidth = 1.8;
+          if (State.bloomGlow) {
+            mainCtx.shadowColor = cube.color;
+            mainCtx.shadowBlur = 8 * State.bloomIntensity;
+          }
+          for (const [e1, e2] of daliNet.cubeEdges) {
+            const sp1 = p2D[e1], sp2 = p2D[e2];
+            if (sp1.valid && sp2.valid) {
+              mainCtx.beginPath();
+              mainCtx.moveTo(sp1.screenX, sp1.screenY);
+              mainCtx.lineTo(sp2.screenX, sp2.screenY);
+              mainCtx.stroke();
+            }
+          }
+        }
+        mainCtx.restore();
+      }
+
+      // 14. Glass Cell Faces with 4D Lighting (when not unfolding)
+      if (State.cellFaces && State.unfoldAmount <= 0.001 && State.poly.faces && State.poly.faces.length > 0) {
+        const faceList = [];
+        for (let fIdx = 0; fIdx < State.poly.faces.length; fIdx++) {
+          const f = State.poly.faces[fIdx];
+          let avgZ = 0, avgW = 0, valid = true;
+          for (const vIdx of f) {
+            if (!projected2D[vIdx] || !projected2D[vIdx].valid) { valid = false; break; }
+            avgZ += projected2D[vIdx].depthZ;
+            avgW += projected2D[vIdx].coordW;
+          }
+          if (valid) {
+            avgZ /= f.length;
+            avgW /= f.length;
+            faceList.push({ face: f, avgZ, avgW, fIdx });
+          }
+        }
+
+        faceList.sort((a, b) => b.avgZ - a.avgZ);
+
+        mainCtx.save();
+        for (const item of faceList) {
+          const f = item.face;
+          mainCtx.beginPath();
+          mainCtx.moveTo(projected2D[f[0]].screenX, projected2D[f[0]].screenY);
+          for (let i = 1; i < f.length; i++) {
+            mainCtx.lineTo(projected2D[f[i]].screenX, projected2D[f[i]].screenY);
+          }
+          mainCtx.closePath();
+
+          let faceColor = ChromaticEngine.getColor(item.avgW, State.colorTheme, State.chromaPhase);
+          let alpha = 0.08;
+
+          // 4D Specular Lighting glint
+          if (State.light4DActive) {
+            const v0 = transformedVerts[f[0]];
+            const normal3D = [0, 0, 1];
+            const lightMult = VolumetricEngine.computeLighting(v0, normal3D, light4D);
+            alpha *= lightMult;
+          }
+
+          if (faceColor.startsWith('hsl')) {
+            mainCtx.fillStyle = faceColor.replace('hsl', 'hsla').replace(')', `, ${alpha})`);
+          } else {
+            mainCtx.fillStyle = faceColor.replace('rgb', 'rgba').replace(')', `, ${alpha})`);
+          }
+          mainCtx.fill();
+        }
+        mainCtx.restore();
+      }
+
+      // 15. Highlight Selected 3D Cell (if isolated)
+      if (State.selectedCell >= 0 && State.poly.cells && State.poly.cells[State.selectedCell]) {
+        const cell = State.poly.cells[State.selectedCell];
+        const cellVerts = new Set(cell.vertices);
+        mainCtx.save();
+        mainCtx.strokeStyle = '#f59e0b';
+        mainCtx.lineWidth = 3.5;
+        mainCtx.shadowColor = '#f59e0b';
+        mainCtx.shadowBlur = 12 * State.bloomIntensity;
+
+        for (const [i1, i2] of State.poly.edges) {
+          if (cellVerts.has(i1) && cellVerts.has(i2)) {
+            const p1 = projected2D[i1];
+            const p2 = projected2D[i2];
+            if (p1 && p2 && p1.valid && p2.valid) {
+              mainCtx.beginPath();
+              mainCtx.moveTo(p1.screenX, p1.screenY);
+              mainCtx.lineTo(p2.screenX, p2.screenY);
+              mainCtx.stroke();
+            }
+          }
+        }
+        mainCtx.restore();
+      }
+
+      // 16. Draw 4D Edges with Continuous Two-Tone Chromatic Gradients & Glow
+      if (State.unfoldAmount <= 0.001) {
+        mainCtx.save();
+        for (const [i1, i2] of State.poly.edges) {
+          const p1 = projected2D[i1];
+          const p2 = projected2D[i2];
+          if (!p1 || !p2 || !p1.valid || !p2.valid) continue;
+
+          const col1 = ChromaticEngine.getColor(p1.coordW, State.colorTheme, State.chromaPhase);
+          const col2 = ChromaticEngine.getColor(p2.coordW, State.colorTheme, State.chromaPhase);
+
+          const avgW = (p1.coordW + p2.coordW) / 2;
+          const wFactor = (avgW + 1.8) / 3.6;
+
+          // Atmospheric Fog decay on line alpha
+          let fogAlpha = 1.0;
+          if (State.hyperFog) {
+            const d4 = Math.hypot(...transformedVerts[i1]);
+            fogAlpha = Math.exp(-State.fogDensity * d4 * 0.35);
+          }
+
+          const lineThickness = State.depthGlow ? (0.8 + wFactor * 2.2) : 1.5;
+
+          mainCtx.beginPath();
+          mainCtx.moveTo(p1.screenX, p1.screenY);
+          mainCtx.lineTo(p2.screenX, p2.screenY);
+
+          if (State.gradientEdges && Math.abs(p1.screenX - p2.screenX) + Math.abs(p1.screenY - p2.screenY) > 4) {
+            const grad = mainCtx.createLinearGradient(p1.screenX, p1.screenY, p2.screenX, p2.screenY);
+            grad.addColorStop(0, col1);
+            grad.addColorStop(1, col2);
+            mainCtx.strokeStyle = grad;
+          } else {
+            mainCtx.strokeStyle = col1;
+          }
+
+          mainCtx.globalAlpha = Math.max(0.15, Math.min(1.0, fogAlpha));
+          mainCtx.lineWidth = lineThickness;
+
+          if (State.bloomGlow && State.depthGlow && wFactor > 0.5) {
+            mainCtx.shadowColor = col1;
+            mainCtx.shadowBlur = 8 * State.bloomIntensity;
+          } else {
+            mainCtx.shadowBlur = 0;
+          }
+          mainCtx.stroke();
+        }
+        mainCtx.restore();
+      }
+
+      // 17. Draw Real-Time Hyperplane Slicing Cut Overlay
+      const sliceResult = HyperplaneSlicer.computeSlice(
+        transformedVerts,
+        State.poly.edges,
+        State.poly.faces,
+        State.sliceW
+      );
+
+      if (sliceResult.segments.length > 0) {
+        mainCtx.save();
+        mainCtx.strokeStyle = '#ffffff';
+        mainCtx.lineWidth = 2.8;
+        mainCtx.shadowColor = '#00f0ff';
+        mainCtx.shadowBlur = 14 * State.bloomIntensity;
+
+        const sliceProj = sliceResult.vertices.map(pt3 => project3Dto2D([pt3[0], pt3[1], pt3[2], State.sliceW], w, h));
+
+        for (const [c1, c2] of sliceResult.segments) {
+          const sp1 = sliceProj[c1], sp2 = sliceProj[c2];
+          if (sp1 && sp2 && sp1.valid && sp2.valid) {
+            mainCtx.beginPath();
+            mainCtx.moveTo(sp1.screenX, sp1.screenY);
+            mainCtx.lineTo(sp2.screenX, sp2.screenY);
+            mainCtx.stroke();
+          }
+        }
+
+        mainCtx.fillStyle = '#00f0ff';
+        for (const sp of sliceProj) {
+          if (sp.valid) {
+            mainCtx.beginPath();
+            mainCtx.arc(sp.screenX, sp.screenY, 3.5, 0, Math.PI * 2);
+            mainCtx.fill();
+          }
+        }
+        mainCtx.restore();
+      }
+
+      document.getElementById('slice-verts-count').textContent = sliceResult.vertices.length;
+      document.getElementById('slice-edges-count').textContent = sliceResult.segments.length;
+
+      // 18. Draw 4D Bouncing Particles & Boundary Ripples
+      if (State.particleActive) {
+        mainCtx.save();
+
+        // Draw Expanding Collision Ripples
+        for (const rip of State.particleChamber.ripples) {
+          const rRot = Math4D.transformVector(State.rotMatrix, rip.pos);
+          const rProj3 = project4Dto3D(rRot);
+          const rProj2 = project3Dto2D(rProj3, w, h);
+          if (!rProj2.valid) continue;
+
+          mainCtx.beginPath();
+          mainCtx.arc(rProj2.screenX, rProj2.screenY, rip.radius * 60, 0, Math.PI * 2);
+          mainCtx.strokeStyle = `rgba(0, 240, 255, ${rip.alpha * 0.6})`;
+          mainCtx.lineWidth = 2.0;
+          mainCtx.stroke();
+        }
+
+        // Draw Particles & Fading Spline Trails
+        for (const p of State.particleChamber.particles) {
+          const pRot = Math4D.transformVector(State.rotMatrix, p.pos);
+          const p3 = project4Dto3D(pRot);
+          const p2 = project3Dto2D(p3, w, h);
+          if (!p2.valid) continue;
+
+          const pColor = ChromaticEngine.getColor(pRot[3], State.colorTheme, State.chromaPhase);
+
+          // Particle Trail
+          if (p.history.length > 1) {
+            mainCtx.beginPath();
+            let first = true;
+            for (const hPos of p.history) {
+              const hRot = Math4D.transformVector(State.rotMatrix, hPos);
+              const hProj = project3Dto2D(project4Dto3D(hRot), w, h);
+              if (!hProj.valid) continue;
+              if (first) { mainCtx.moveTo(hProj.screenX, hProj.screenY); first = false; }
+              else mainCtx.lineTo(hProj.screenX, hProj.screenY);
+            }
+            mainCtx.strokeStyle = pColor.replace(')', ', 0.35)').replace('rgb', 'rgba');
+            mainCtx.lineWidth = 1.4;
+            mainCtx.stroke();
+          }
+
+          // Glowing Particle Core
+          const pRadius = Math.max(3, 4.5 + pRot[3] * 1.5);
+          mainCtx.beginPath();
+          mainCtx.arc(p2.screenX, p2.screenY, pRadius, 0, Math.PI * 2);
+          mainCtx.fillStyle = pColor;
+          if (State.bloomGlow) {
+            mainCtx.shadowColor = pColor;
+            mainCtx.shadowBlur = 12 * State.bloomIntensity;
+          }
+          mainCtx.fill();
+
+          // White center highlight
+          mainCtx.beginPath();
+          mainCtx.arc(p2.screenX, p2.screenY, pRadius * 0.4, 0, Math.PI * 2);
+          mainCtx.fillStyle = '#ffffff';
+          mainCtx.shadowBlur = 0;
+          mainCtx.fill();
+        }
+        mainCtx.restore();
+      }
+
+      // 19. Glowing Vertex Nodes (W-Depth Sizing & Chromatic Bloom)
+      if (State.unfoldAmount <= 0.001) {
+        mainCtx.save();
+        for (let i = 0; i < projected2D.length; i++) {
+          const p = projected2D[i];
+          if (!p || !p.valid) continue;
+
+          const nodeColor = ChromaticEngine.getColor(p.coordW, State.colorTheme, State.chromaPhase);
+          const radius = Math.max(2, 3.5 + p.coordW * 1.2);
+
+          mainCtx.beginPath();
+          mainCtx.arc(p.screenX, p.screenY, radius, 0, Math.PI * 2);
+          mainCtx.fillStyle = nodeColor;
+          if (State.bloomGlow) {
+            mainCtx.shadowColor = nodeColor;
+            mainCtx.shadowBlur = 10 * State.bloomIntensity;
+          }
+          mainCtx.fill();
+
+          // White Core Sparkle
+          mainCtx.beginPath();
+          mainCtx.arc(p.screenX, p.screenY, radius * 0.45, 0, Math.PI * 2);
+          mainCtx.fillStyle = '#ffffff';
+          mainCtx.shadowBlur = 0;
+          mainCtx.fill();
+
+          // Hyper-Camera Corona Flare on vertices entering observer hyperplane
+          if (State.bloomGlow && p.coordW > 0.85) {
+            mainCtx.save();
+            mainCtx.globalCompositeOperation = 'lighter';
+            mainCtx.beginPath();
+            mainCtx.arc(p.screenX, p.screenY, radius * 2.8, 0, Math.PI * 2);
+            mainCtx.fillStyle = 'rgba(0, 240, 255, 0.25)';
+            mainCtx.fill();
+            mainCtx.restore();
+          }
+        }
+        mainCtx.restore();
+      }
+
+      // 20. Feed Frame to Animation Recorder Studio Hook (if recording active)
+      AnimationRecorder.captureFrameHook(mainCanvas);
+
+      // 21. Secondary Canvas: 3D Slicing Chamber
+      renderSliceChamber(sliceResult);
+
+      // 22. SO(4) Matrix UI Table
+      updateMatrixDisplay();
+
+      requestAnimationFrame(renderMainScene);
+    }
+
+
+    /* =============================================================
+       15. SECONDARY CANVASES: 3D SLICING CHAMBER RENDERER
+    ============================================================= */
+    let sliceOrbitAngle = 0;
+
+    function renderSliceChamber(sliceResult) {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      const sw = sliceCanvas.width / dpr;
+      const sh = sliceCanvas.height / dpr;
+
+      sliceCtx.fillStyle = '#090d16';
+      sliceCtx.fillRect(0, 0, sw, sh);
+
+      sliceCtx.save();
+      sliceCtx.strokeStyle = 'rgba(0, 240, 255, 0.1)';
+      sliceCtx.lineWidth = 1;
+      sliceCtx.beginPath();
+      sliceCtx.arc(sw / 2, sh / 2, sh * 0.4, 0, Math.PI * 2);
+      sliceCtx.stroke();
+      sliceCtx.restore();
+
+      if (!sliceResult || sliceResult.vertices.length === 0) {
+        sliceCtx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+        sliceCtx.font = '11px ' + getComputedStyle(document.body).fontFamily;
+        sliceCtx.textAlign = 'center';
+        sliceCtx.fillText('NO INTERSECTION AT W=' + State.sliceW.toFixed(2), sw / 2, sh / 2 + 4);
+        return;
+      }
+
+      sliceOrbitAngle += 0.015;
+
+      const zoom = 55;
+      const cosA = Math.cos(sliceOrbitAngle), sinA = Math.sin(sliceOrbitAngle);
+      const cosP = Math.cos(0.4), sinP = Math.sin(0.4);
+
+      const pts2D = sliceResult.vertices.map(pt => {
+        const rx = pt[0] * cosA - pt[2] * sinA;
+        const rz = pt[0] * sinA + pt[2] * cosA;
+        const ry = pt[1] * cosP - rz * sinP;
+        const fz = pt[1] * sinP + rz * cosP;
+
+        const k = 2.8 / (2.8 + fz);
+        return {
+          x: sw / 2 + rx * k * zoom,
+          y: sh / 2 - ry * k * zoom,
+          z: fz
+        };
+      });
+
+      // Render Solid Shaded Face Hull (if enabled)
+      if (State.renderSolidSlice && pts2D.length >= 3) {
+        sliceCtx.save();
+        sliceCtx.beginPath();
+        let cx = 0, cy = 0;
+        pts2D.forEach(p => { cx += p.x; cy += p.y; });
+        cx /= pts2D.length; cy /= pts2D.length;
+
+        const sorted = [...pts2D].sort((a, b) => Math.atan2(a.y - cy, a.x - cx) - Math.atan2(b.y - cy, b.x - cx));
+
+        sliceCtx.moveTo(sorted[0].x, sorted[0].y);
+        for (let i = 1; i < sorted.length; i++) {
+          sliceCtx.lineTo(sorted[i].x, sorted[i].y);
+        }
+        sliceCtx.closePath();
+
+        const grad = sliceCtx.createRadialGradient(sw/2, sh/2, 5, sw/2, sh/2, sh*0.45);
+        grad.addColorStop(0, 'rgba(0, 240, 255, 0.45)');
+        grad.addColorStop(1, 'rgba(168, 85, 247, 0.15)');
+        sliceCtx.fillStyle = grad;
+        sliceCtx.fill();
+        sliceCtx.restore();
+      }
+
+      // Wireframe Segments
+      sliceCtx.save();
+      sliceCtx.strokeStyle = '#00f0ff';
+      sliceCtx.lineWidth = 2.0;
+      sliceCtx.shadowColor = '#00f0ff';
+      sliceCtx.shadowBlur = 8;
+
+      for (const [c1, c2] of sliceResult.segments) {
+        const p1 = pts2D[c1], p2 = pts2D[c2];
+        if (p1 && p2) {
+          sliceCtx.beginPath();
+          sliceCtx.moveTo(p1.x, p1.y);
+          sliceCtx.lineTo(p2.x, p2.y);
+          sliceCtx.stroke();
+        }
+      }
+
+      sliceCtx.fillStyle = '#ffffff';
+      for (const p of pts2D) {
+        sliceCtx.beginPath();
+        sliceCtx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        sliceCtx.fill();
+      }
+      sliceCtx.restore();
+    }
+
+
+    /* =============================================================
+       16. UI FORMATTING & MATRIX INSPECTOR
+    ============================================================= */
+    function updateMatrixDisplay() {
+      const table = document.getElementById('matrix-display');
+      const M = State.rotMatrix;
+      let html = '';
+      for (let i = 0; i < 4; i++) {
+        html += '<tr>';
+        for (let j = 0; j < 4; j++) {
+          const val = M[i][j];
+          const isDiag = (i === j);
+          const cls = isDiag ? 'class="diag"' : '';
+          const str = (val >= 0 ? ' ' : '') + val.toFixed(3);
+          html += `<td ${cls}>${str}</td>`;
+        }
+        html += '</tr>';
+      }
+      table.innerHTML = html;
+    }
+
+
+    /* =============================================================
+       17. INTERACTION CONTROLLER: MOUSE, TOUCH, GYROSCOPE
+    ============================================================= */
+    let isDragging = false;
+    let lastPointerX = 0;
+    let lastPointerY = 0;
+    let touchDistanceStart = 0;
+
+    const viewport = document.getElementById('viewport-box');
+
+    viewport.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+      viewport.setPointerCapture(e.pointerId);
+
+      if (State.dragMode === 'particle') {
+        const rect = viewport.getBoundingClientRect();
+        State.particleChamber.interactiveForce = {
+          x: ((e.clientX - rect.left) / rect.width - 0.5) * 2.8,
+          y: -((e.clientY - rect.top) / rect.height - 0.5) * 2.8,
+          w: State.sliceW
+        };
+      }
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+
+      const dx = e.clientX - lastPointerX;
+      const dy = e.clientY - lastPointerY;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+
+      const sensitivity = 0.007;
+      const isRightClick = (e.buttons === 2 || e.shiftKey);
+      const activeMode = isRightClick ? 'hyper' : State.dragMode;
+
+      if (activeMode === 'camera') {
+        State.camYaw += dx * sensitivity;
+        State.camPitch = Math.max(-1.4, Math.min(1.4, State.camPitch + dy * sensitivity));
+      } else if (activeMode === 'hyper') {
+        const rotX = Math4D.rotXW(dx * sensitivity * 1.4);
+        const rotY = Math4D.rotYW(dy * sensitivity * 1.4);
+        State.rotMatrix = Math4D.multiplyMatrix(rotX, State.rotMatrix);
+        State.rotMatrix = Math4D.multiplyMatrix(rotY, State.rotMatrix);
+      } else if (activeMode === 'slice') {
+        State.sliceW = Math.max(-1.6, Math.min(1.6, State.sliceW + dx * 0.01));
+        document.getElementById('slider-slice-w').value = State.sliceW.toFixed(2);
+        document.getElementById('val-slice-w').textContent = State.sliceW.toFixed(2);
+        document.getElementById('hud-slice-w').textContent = `W = ${State.sliceW.toFixed(2)}`;
+        document.getElementById('slice-active-badge').textContent = `W = ${State.sliceW.toFixed(2)}`;
+      } else if (activeMode === 'particle') {
+        const rect = viewport.getBoundingClientRect();
+        State.particleChamber.interactiveForce = {
+          x: ((e.clientX - rect.left) / rect.width - 0.5) * 2.8,
+          y: -((e.clientY - rect.top) / rect.height - 0.5) * 2.8,
+          w: State.sliceW
+        };
+      }
+    });
+
+    viewport.addEventListener('pointerup', () => {
+      isDragging = false;
+      State.particleChamber.interactiveForce = null;
+    });
+    viewport.addEventListener('pointercancel', () => {
+      isDragging = false;
+      State.particleChamber.interactiveForce = null;
+    });
+    viewport.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    // Wheel Zoom
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomDelta = e.deltaY * 0.0015;
+      State.scale = Math.max(0.4, Math.min(3.0, State.scale - zoomDelta));
+      document.getElementById('slider-scale').value = State.scale.toFixed(2);
+      document.getElementById('val-scale').textContent = State.scale.toFixed(2) + 'x';
+    }, { passive: false });
+
+    // Touch Pinch Zoom
+    viewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        touchDistanceStart = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+      }
+    }, { passive: true });
+
+    viewport.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2) {
+        const currentDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const diff = (currentDist - touchDistanceStart) * 0.005;
+        touchDistanceStart = currentDist;
+        State.scale = Math.max(0.4, Math.min(3.0, State.scale + diff));
+        document.getElementById('slider-scale').value = State.scale.toFixed(2);
+        document.getElementById('val-scale').textContent = State.scale.toFixed(2) + 'x';
+      }
+    }, { passive: true });
+
+    // Gyroscope
+    function handleDeviceOrientation(e) {
+      if (!State.gyroEnabled) return;
+      if (e.gamma !== null && e.beta !== null) {
+        const rotY = Math4D.rotXW(e.gamma * 0.0003);
+        const rotX = Math4D.rotYW(e.beta * 0.0003);
+        State.rotMatrix = Math4D.multiplyMatrix(rotY, State.rotMatrix);
+        State.rotMatrix = Math4D.multiplyMatrix(rotX, State.rotMatrix);
+      }
+    }
+
+
+    /* =============================================================
+       18. EVENT WIRING & UI CONTROLLERS
+    ============================================================= */
+    function switchPolytope(key) {
+      State.currentPolyKey = key;
+      if (key === 'tesseract') State.poly = PolytopeLibrary.createTesseract();
+      else if (key === 'cell16') State.poly = PolytopeLibrary.create16Cell();
+      else if (key === 'cell24') State.poly = PolytopeLibrary.create24Cell();
+      else if (key === 'cell5') State.poly = PolytopeLibrary.create5Cell();
+      else if (key === 'cell600') State.poly = PolytopeLibrary.create600Cell();
+      else if (key === 'grand120') State.poly = PolytopeLibrary.createGrand120Cell();
+      else if (key === 'cell120') State.poly = PolytopeLibrary.create120Cell();
+      else if (key === 'hypersphere') State.poly = PolytopeLibrary.createHypersphere();
+      else if (key === 'clifford') State.poly = PolytopeLibrary.createCliffordTorus();
+      else if (key === 'klein') State.poly = PolytopeLibrary.createKleinBottle4D();
+
+      document.getElementById('hud-poly-name').textContent = State.poly.name;
+      document.getElementById('hud-v').textContent = State.poly.vertices.length;
+      document.getElementById('hud-e').textContent = State.poly.edges.length;
+      document.getElementById('hud-f').textContent = State.poly.faces ? State.poly.faces.length : 0;
+      document.getElementById('hud-c').textContent = State.poly.cells ? State.poly.cells.length : 0;
+      document.getElementById('hud-rad').textContent = State.poly.radius.toFixed(2);
+      document.getElementById('poly-schlafli').textContent = State.poly.schlafli;
+
+      const unfoldBox = document.getElementById('unfold-box');
+      unfoldBox.style.display = State.poly.supportUnfold ? 'flex' : 'none';
+
+      const cellBox = document.getElementById('cell-isolate-box');
+      cellBox.style.display = (State.poly.cells && State.poly.cells.length > 0) ? 'flex' : 'none';
+
+      document.querySelectorAll('.poly-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.dataset.poly === key);
+      });
+      document.getElementById('poly-select').value = key;
+    }
+
+    // Default Polytope
+    switchPolytope('tesseract');
+
+    // Header Quick Pills
+    document.querySelectorAll('.poly-pill').forEach(pill => {
+      pill.addEventListener('click', () => switchPolytope(pill.dataset.poly));
+    });
+
+    // Dropdown Polytope Selector
+    document.getElementById('poly-select').addEventListener('change', (e) => {
+      switchPolytope(e.target.value);
+    });
+
+    // Scale Slider
+    const sliderScale = document.getElementById('slider-scale');
+    sliderScale.addEventListener('input', (e) => {
+      State.scale = parseFloat(e.target.value);
+      document.getElementById('val-scale').textContent = State.scale.toFixed(2) + 'x';
+    });
+
+    // Dalí Net Unfold Controls
+    const sliderUnfold = document.getElementById('slider-unfold');
+    sliderUnfold.addEventListener('input', (e) => {
+      State.unfoldAmount = parseFloat(e.target.value);
+      document.getElementById('val-unfold').textContent = Math.round(State.unfoldAmount * 100) + '%';
+    });
+
+    const btnAnimateUnfold = document.getElementById('btn-animate-unfold');
+    btnAnimateUnfold.addEventListener('click', () => {
+      State.isUnfoldAnimating = !State.isUnfoldAnimating;
+      btnAnimateUnfold.classList.toggle('btn-primary', State.isUnfoldAnimating);
+      btnAnimateUnfold.classList.toggle('btn-secondary', !State.isUnfoldAnimating);
+      btnAnimateUnfold.innerHTML = State.isUnfoldAnimating ? 'Pause Unfold' : 'Animate Unfold';
+    });
+
+    document.getElementById('btn-reset-fold').addEventListener('click', () => {
+      State.unfoldAmount = 0.0;
+      State.isUnfoldAnimating = false;
+      btnAnimateUnfold.classList.remove('btn-primary');
+      btnAnimateUnfold.classList.add('btn-secondary');
+      btnAnimateUnfold.innerHTML = 'Animate Unfold';
+      sliderUnfold.value = '0';
+      document.getElementById('val-unfold').textContent = '0%';
+    });
+
+    document.getElementById('slider-unfold-speed').addEventListener('input', (e) => {
+      State.unfoldAnimSpeed = parseFloat(e.target.value);
+      document.getElementById('val-unfold-speed').textContent = (State.unfoldAnimSpeed * 100).toFixed(1) + 'x';
+    });
+
+    // 6-Plane Rotational Sliders
+    const planes = ['xy', 'xz', 'yz', 'xw', 'yw', 'zw'];
+    planes.forEach((pl, idx) => {
+      const slider = document.getElementById(`rot-${pl}`);
+      slider.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        State.velocities[idx] = val;
+        document.getElementById(`val-rot-${pl}`).textContent = val.toFixed(3);
+      });
+    });
+
+    // Precession Preset Buttons
+    document.getElementById('preset-clifford').addEventListener('click', () => {
+      setVelocities([0.015, 0, 0, 0, 0, 0.015]);
+    });
+    document.getElementById('preset-somersault').addEventListener('click', () => {
+      setVelocities([0, 0, 0.014, 0.014, 0, 0]);
+    });
+    document.getElementById('preset-flow').addEventListener('click', () => {
+      setVelocities([0.005, 0.004, 0, 0.012, 0.012, 0.012]);
+    });
+    document.getElementById('preset-stop').addEventListener('click', () => {
+      setVelocities([0, 0, 0, 0, 0, 0]);
+    });
+
+    function setVelocities(vArr) {
+      State.velocities = [...vArr];
+      planes.forEach((pl, idx) => {
+        document.getElementById(`rot-${pl}`).value = vArr[idx];
+        document.getElementById(`val-rot-${pl}`).textContent = vArr[idx].toFixed(3);
+      });
+    }
+
+    // Drag Mode Buttons (Top HUD)
+    const modeBtns = document.querySelectorAll('.drag-mode-btn');
+    modeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        State.dragMode = btn.dataset.mode;
+      });
+    });
+
+    // Projection Optics Controls
+    document.getElementById('proj-select').addEventListener('change', (e) => {
+      State.projMode = e.target.value;
+      document.getElementById('proj-badge').textContent = e.target.value.toUpperCase();
+    });
+    document.getElementById('slider-d4').addEventListener('input', (e) => {
+      State.d4 = parseFloat(e.target.value);
+      document.getElementById('val-d4').textContent = State.d4.toFixed(1);
+    });
+    document.getElementById('slider-d3').addEventListener('input', (e) => {
+      State.d3 = parseFloat(e.target.value);
+      document.getElementById('val-d3').textContent = State.d3.toFixed(1);
+    });
+
+    // Hyperplane Slicing Controls
+    const sliderSliceW = document.getElementById('slider-slice-w');
+    sliderSliceW.addEventListener('input', (e) => {
+      State.sliceW = parseFloat(e.target.value);
+      document.getElementById('val-slice-w').textContent = State.sliceW.toFixed(2);
+      document.getElementById('hud-slice-w').textContent = `W = ${State.sliceW.toFixed(2)}`;
+      document.getElementById('slice-active-badge').textContent = `W = ${State.sliceW.toFixed(2)}`;
+      audio.playSliceChime(1.0);
+    });
+
+    document.getElementById('btn-auto-scan').addEventListener('click', () => {
+      State.autoScan = !State.autoScan;
+      const btn = document.getElementById('btn-auto-scan');
+      btn.classList.toggle('btn-primary', !State.autoScan);
+      btn.classList.toggle('btn-secondary', State.autoScan);
+      btn.innerHTML = State.autoScan ? 'Pause Scan' : 'Auto Scan W';
+    });
+
+    document.getElementById('btn-center-slice').addEventListener('click', () => {
+      State.sliceW = 0.0;
+      sliderSliceW.value = '0.00';
+      document.getElementById('val-slice-w').textContent = '0.00';
+      document.getElementById('hud-slice-w').textContent = 'W = 0.00';
+      document.getElementById('slice-active-badge').textContent = 'W = 0.00';
+    });
+
+    document.getElementById('chk-slice-solid').addEventListener('change', (e) => {
+      State.renderSolidSlice = e.target.checked;
+    });
+
+    // 4D Bouncing Particle Chamber Controls
+    const chkParticleActive = document.getElementById('chk-particle-active');
+    const particleBadge = document.getElementById('particle-status-badge');
+    const hudParticleChip = document.getElementById('hud-particle-chip');
+
+    chkParticleActive.addEventListener('change', (e) => {
+      State.particleActive = e.target.checked;
+      particleBadge.textContent = State.particleActive ? 'ACTIVE' : 'OFF';
+      particleBadge.style.color = State.particleActive ? 'var(--cyan)' : 'var(--purple)';
+      hudParticleChip.style.display = State.particleActive ? 'flex' : 'none';
+      btnParticles.classList.toggle('active', State.particleActive);
+    });
+
+    const btnParticles = document.getElementById('btn-particles');
+    btnParticles.addEventListener('click', () => {
+      chkParticleActive.checked = !chkParticleActive.checked;
+      chkParticleActive.dispatchEvent(new Event('change'));
+    });
+
+    document.getElementById('slider-particle-count').addEventListener('input', (e) => {
+      const count = parseInt(e.target.value, 10);
+      State.particleChamber.setCount(count);
+      document.getElementById('val-particle-count').textContent = count;
+      document.getElementById('hud-particle-count').textContent = count;
+    });
+
+    document.getElementById('slider-particle-speed').addEventListener('input', (e) => {
+      State.particleChamber.speedMult = parseFloat(e.target.value);
+      document.getElementById('val-particle-speed').textContent = State.particleChamber.speedMult.toFixed(1) + 'x';
+    });
+
+    document.getElementById('particle-gravity-select').addEventListener('change', (e) => {
+      State.particleChamber.gravityMode = e.target.value;
+    });
+
+    document.getElementById('particle-boundary-select').addEventListener('change', (e) => {
+      State.particleChamber.boundary = e.target.value;
+    });
+
+    document.getElementById('chk-particle-collide').addEventListener('change', (e) => {
+      State.particleChamber.collideParticles = e.target.checked;
+    });
+
+    document.getElementById('chk-particle-trails').addEventListener('change', (e) => {
+      State.particleChamber.showTrails = e.target.checked;
+    });
+
+    document.getElementById('btn-respawn-particles').addEventListener('click', () => {
+      const count = parseInt(document.getElementById('slider-particle-count').value, 10);
+      State.particleChamber.init(count);
+    });
+
+    // 4D Chromatic Depth & Shading Controls
+    document.getElementById('theme-select').addEventListener('change', (e) => {
+      State.colorTheme = e.target.value;
+    });
+    document.getElementById('chk-gradient-edges').addEventListener('change', (e) => {
+      State.gradientEdges = e.target.checked;
+    });
+    document.getElementById('chk-chroma-cycle').addEventListener('change', (e) => {
+      State.chromaCycle = e.target.checked;
+    });
+    document.getElementById('slider-chroma-speed').addEventListener('input', (e) => {
+      State.chromaSpeed = parseFloat(e.target.value);
+      document.getElementById('val-chroma-speed').textContent = State.chromaSpeed.toFixed(1) + 'x';
+    });
+    document.getElementById('slider-trails').addEventListener('input', (e) => {
+      State.trailLength = parseInt(e.target.value, 10);
+      document.getElementById('val-trails').textContent = State.trailLength;
+    });
+    document.getElementById('chk-depth-glow').addEventListener('change', (e) => {
+      State.depthGlow = e.target.checked;
+    });
+    document.getElementById('chk-cell-faces').addEventListener('change', (e) => {
+      State.cellFaces = e.target.checked;
+    });
+    document.getElementById('chk-shadow-floor').addEventListener('change', (e) => {
+      State.shadowFloor = e.target.checked;
+    });
+    document.getElementById('cell-select').addEventListener('change', (e) => {
+      State.selectedCell = parseInt(e.target.value, 10);
+    });
+
+    // Volumetric Lighting & Bloom Controls
+    const chkBloomGlow = document.getElementById('chk-bloom-glow');
+    const chkHyperFog = document.getElementById('chk-hyper-fog');
+    const btnBloom = document.getElementById('btn-bloom');
+
+    chkBloomGlow.addEventListener('change', (e) => {
+      State.bloomGlow = e.target.checked;
+      document.getElementById('hud-bloom-status').textContent = State.bloomGlow ? State.bloomIntensity.toFixed(1) + 'x' : 'OFF';
+      btnBloom.classList.toggle('active', State.bloomGlow);
+    });
+
+    chkHyperFog.addEventListener('change', (e) => {
+      State.hyperFog = e.target.checked;
+      document.getElementById('hud-fog-status').textContent = State.hyperFog ? 'ON' : 'OFF';
+    });
+
+    btnBloom.addEventListener('click', () => {
+      chkBloomGlow.checked = !chkBloomGlow.checked;
+      chkBloomGlow.dispatchEvent(new Event('change'));
+    });
+
+    document.getElementById('slider-fog-density').addEventListener('input', (e) => {
+      State.fogDensity = parseFloat(e.target.value);
+      document.getElementById('val-fog-density').textContent = State.fogDensity.toFixed(2);
+    });
+
+    document.getElementById('chk-4d-light').addEventListener('change', (e) => {
+      State.light4DActive = e.target.checked;
+    });
+
+    document.getElementById('slider-light-speed').addEventListener('input', (e) => {
+      State.lightOrbitSpeed = parseFloat(e.target.value);
+      document.getElementById('val-light-speed').textContent = State.lightOrbitSpeed.toFixed(1) + 'x';
+    });
+
+    document.getElementById('slider-bloom-intensity').addEventListener('input', (e) => {
+      State.bloomIntensity = parseFloat(e.target.value);
+      document.getElementById('val-bloom-intensity').textContent = State.bloomIntensity.toFixed(1) + 'x';
+      if (State.bloomGlow) {
+        document.getElementById('hud-bloom-status').textContent = State.bloomIntensity.toFixed(1) + 'x';
+      }
+    });
+
+    document.getElementById('chk-dust-motes').addEventListener('change', (e) => {
+      State.showDustMotes = e.target.checked;
+    });
+
+    // Reset View
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      State.rotMatrix = Math4D.createIdentity();
+      State.camYaw = 0.35;
+      State.camPitch = 0.25;
+      State.scale = 1.4;
+      State.unfoldAmount = 0.0;
+      State.isUnfoldAnimating = false;
+      sliderScale.value = '1.4';
+      document.getElementById('val-scale').textContent = '1.40x';
+      sliderUnfold.value = '0';
+      document.getElementById('val-unfold').textContent = '0%';
+      setVelocities([0.008, 0.005, 0.000, 0.012, 0.006, 0.003]);
+    });
+
+    // Audio Resonance Toggle
+    const btnAudio = document.getElementById('btn-audio');
+    const eqBars = document.querySelectorAll('.eq-bar');
+    btnAudio.addEventListener('click', () => {
+      const active = audio.toggleAudio();
+      btnAudio.classList.toggle('active', active);
+      eqBars.forEach((bar, i) => {
+        bar.style.height = active ? `${[8, 14, 9, 15][i]}px` : '3px';
+      });
+      document.getElementById('hud-audio-freq').textContent = active ? '4D Resonant Drone' : 'Muted';
+    });
+
+    // Gyroscope Toggle Button
+    const btnGyro = document.getElementById('btn-gyro');
+    btnGyro.addEventListener('click', async () => {
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+          const perm = await DeviceOrientationEvent.requestPermission();
+          if (perm === 'granted') {
+            State.gyroEnabled = !State.gyroEnabled;
+            window.addEventListener('deviceorientation', handleDeviceOrientation);
+          }
+        } catch (err) {
+          console.warn('Gyroscope permission denied', err);
+        }
+      } else {
+        State.gyroEnabled = !State.gyroEnabled;
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+      }
+      btnGyro.classList.toggle('active', State.gyroEnabled);
+    });
+
+    // Sidebar Collapse Logic
+    const leftSidebar = document.getElementById('left-sidebar');
+    const rightSidebar = document.getElementById('right-sidebar');
+    const leftToggleTab = document.getElementById('left-tab-toggle');
+    const rightToggleTab = document.getElementById('right-tab-toggle');
+
+    function toggleLeftPanel() {
+      const isMobile = window.innerWidth <= 820;
+      if (isMobile) leftSidebar.classList.toggle('mobile-open');
+      else leftSidebar.classList.toggle('collapsed');
+    }
+
+    function toggleRightPanel() {
+      const isMobile = window.innerWidth <= 820;
+      if (isMobile) rightSidebar.classList.toggle('mobile-open');
+      else rightSidebar.classList.toggle('collapsed');
+    }
+
+    document.getElementById('btn-close-left').addEventListener('click', toggleLeftPanel);
+    document.getElementById('btn-close-right').addEventListener('click', toggleRightPanel);
+    leftToggleTab.addEventListener('click', toggleLeftPanel);
+    rightToggleTab.addEventListener('click', toggleRightPanel);
+
+    // Mobile Toolbar
+    const mobBtnLeft = document.getElementById('mob-btn-left');
+    const mobBtnSlice = document.getElementById('mob-btn-slice');
+    const mobBtnPart = document.getElementById('mob-btn-part');
+    const mobBtnRecord = document.getElementById('mob-btn-record');
+    const mobBtnAudio = document.getElementById('mob-btn-audio');
+    const mobBtnReset = document.getElementById('mob-btn-reset');
+
+    mobBtnLeft.addEventListener('click', () => {
+      rightSidebar.classList.remove('mobile-open');
+      leftSidebar.classList.toggle('mobile-open');
+      mobBtnLeft.classList.toggle('active', leftSidebar.classList.contains('mobile-open'));
+      mobBtnSlice.classList.remove('active');
+    });
+
+    mobBtnSlice.addEventListener('click', () => {
+      leftSidebar.classList.remove('mobile-open');
+      rightSidebar.classList.toggle('mobile-open');
+      mobBtnSlice.classList.toggle('active', rightSidebar.classList.contains('mobile-open'));
+      mobBtnLeft.classList.remove('active');
+    });
+
+    mobBtnPart.addEventListener('click', () => {
+      btnParticles.click();
+      mobBtnPart.classList.toggle('active', State.particleActive);
+    });
+
+    mobBtnRecord.addEventListener('click', () => {
+      document.getElementById('btn-record').click();
+    });
+
+    mobBtnAudio.addEventListener('click', () => {
+      btnAudio.click();
+      mobBtnAudio.classList.toggle('active', !audio.isMuted);
+    });
+
+    mobBtnReset.addEventListener('click', () => {
+      document.getElementById('btn-reset').click();
+    });
+
+    // Modals
+    const modalAcademy = document.getElementById('modal-academy');
+    document.getElementById('btn-tour').addEventListener('click', () => {
+      modalAcademy.classList.add('open');
+    });
+    document.getElementById('btn-close-modal').addEventListener('click', () => {
+      modalAcademy.classList.remove('open');
+    });
+    document.getElementById('btn-modal-ok').addEventListener('click', () => {
+      modalAcademy.classList.remove('open');
+    });
+
+    const modalSnapshot = document.getElementById('modal-snapshot');
+    document.getElementById('btn-snapshot').addEventListener('click', () => {
+      modalSnapshot.classList.add('open');
+    });
+    document.getElementById('btn-close-snap-modal').addEventListener('click', () => {
+      modalSnapshot.classList.remove('open');
+    });
+    document.getElementById('btn-snap-cancel').addEventListener('click', () => {
+      modalSnapshot.classList.remove('open');
+    });
+
+    // Snapshot Download
+    document.getElementById('btn-snap-download').addEventListener('click', () => {
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = 1920;
+      exportCanvas.height = 1080;
+      const expCtx = exportCanvas.getContext('2d');
+
+      const bgStyle = document.getElementById('snap-bg-style').value;
+      const watermark = document.getElementById('snap-watermark').value;
+
+      if (bgStyle === 'void') {
+        const rad = expCtx.createRadialGradient(960, 540, 50, 960, 540, 1100);
+        rad.addColorStop(0, '#101626');
+        rad.addColorStop(1, '#05070c');
+        expCtx.fillStyle = rad;
+        expCtx.fillRect(0, 0, 1920, 1080);
+      } else if (bgStyle === 'blueprint') {
+        expCtx.fillStyle = '#060e1d';
+        expCtx.fillRect(0, 0, 1920, 1080);
+        expCtx.strokeStyle = 'rgba(0, 240, 255, 0.06)';
+        expCtx.lineWidth = 1;
+        for (let x = 0; x < 1920; x += 40) {
+          expCtx.beginPath(); expCtx.moveTo(x, 0); expCtx.lineTo(x, 1080); expCtx.stroke();
+        }
+        for (let y = 0; y < 1080; y += 40) {
+          expCtx.beginPath(); expCtx.moveTo(0, y); expCtx.lineTo(1920, y); expCtx.stroke();
+        }
+      }
+
+      expCtx.drawImage(mainCanvas, 0, 0, 1920, 1080);
+
+      if (watermark === 'yes') {
+        expCtx.fillStyle = '#ffffff';
+        expCtx.font = 'bold 24px ' + getComputedStyle(document.body).fontFamily;
+        expCtx.fillText('CHRONOFORGE 4D — ' + State.poly.name.toUpperCase(), 40, 60);
+
+        expCtx.fillStyle = '#00f0ff';
+        expCtx.font = '14px monospace';
+        expCtx.fillText(`SCHLÄFLI: ${State.poly.schlafli} | W-SLICE: ${State.sliceW.toFixed(2)} | SCALE: ${State.scale.toFixed(2)}`, 40, 90);
+      }
+
+      const link = document.createElement('a');
+      link.download = `ChronoForge4D-${State.currentPolyKey}-${Date.now()}.png`;
+      link.href = exportCanvas.toDataURL('image/png');
+      link.click();
+      modalSnapshot.classList.remove('open');
+    });
+
+    // Animation Recorder Modal
+    const modalRecorder = document.getElementById('modal-recorder');
+    const btnRecord = document.getElementById('btn-record');
+    btnRecord.addEventListener('click', () => {
+      modalRecorder.classList.add('open');
+    });
+    document.getElementById('btn-close-rec-modal').addEventListener('click', () => {
+      modalRecorder.classList.remove('open');
+    });
+    document.getElementById('btn-rec-cancel').addEventListener('click', () => {
+      modalRecorder.classList.remove('open');
+    });
+
+    // Start 360° Recording
+    document.getElementById('btn-rec-start').addEventListener('click', () => {
+      const format = document.getElementById('rec-format').value;
+      const target = document.getElementById('rec-target').value;
+      const duration = document.getElementById('rec-duration').value;
+      const resolution = document.getElementById('rec-resolution').value;
+
+      // Set target rotation preset if selected
+      if (target === 'loop_xw') {
+        setVelocities([0, 0, 0, 0.02, 0, 0]);
+      } else if (target === 'loop_clifford') {
+        setVelocities([0.015, 0, 0, 0, 0, 0.015]);
+      } else if (target === 'loop_xy') {
+        setVelocities([0.02, 0, 0, 0, 0, 0]);
+      }
+
+      AnimationRecorder.startRecording(format, target, duration, resolution, mainCanvas);
+    });
+
+    document.getElementById('btn-rec-stop').addEventListener('click', () => {
+      AnimationRecorder.stopRecording();
+    });
+
+    document.getElementById('btn-rec-download').addEventListener('click', () => {
+      AnimationRecorder.triggerDownload();
+    });
+
+    // Close Modals on Backdrop Click
+    [modalAcademy, modalSnapshot, modalRecorder].forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('open');
+      });
+    });
+
+    // Start Canvases & Animation Loop
+    resizeCanvases();
+    requestAnimationFrame(renderMainScene);
+
+
+  })();
+  </script>
+</body>
+</html>
